@@ -1,4 +1,5 @@
 import pygame
+#import math
 
 
 class Ant(pygame.sprite.Sprite):
@@ -14,6 +15,21 @@ class Ant(pygame.sprite.Sprite):
     def rotate(self, angle):
         self.current_rotation += angle
         self.image = rotate_center(self.initial_image, self.current_rotation)
+
+    def move(self, distance):
+        pass
+
+
+def text_objects(text, font):
+    text_surface = font.render(text, True, (255, 255, 255))
+    return text_surface, text_surface.get_rect()
+
+
+def display_text(screen, text):
+    text_format = pygame.font.Font(None, 18)
+    text_surf, text_rect = text_objects(text, text_format)
+    text_rect.center = (875, 10)
+    screen.blit(text_surf, text_rect)
 
 
 def rotate_center(image, angle):
@@ -60,7 +76,7 @@ def main():
     clock = pygame.time.Clock()
 
     while not done:  # Main game loop
-        clock.tick(60)  # 60 is the maximum frame-rate
+        clock.tick(60)  # Frame-rate
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
 
@@ -79,6 +95,8 @@ def main():
             if event.type == pygame.KEYDOWN:  # If key pressed
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
                     done = True  # Exit
+
+        display_text(screen, "fps: " + str(int(round(clock.get_fps(), 0))))
 
         # Update display to show changes made in current iteration
         pygame.display.update()
