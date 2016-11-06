@@ -11,7 +11,7 @@ ant simulation: artificial intelligence experiment
 - **Pygame** *[download](http://pygame.org/ftp/pygame-1.9.1.win32-py2.7.msi)*
 - *Optional:* **Pycharm** *[download](https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=windows&code=PCC)*
 
-### Linux:
+### Linux (Ubuntu):
 
 *To be run in sequence:*
 
