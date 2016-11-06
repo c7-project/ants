@@ -10,12 +10,15 @@ ant simulation: artificial intelligence experiment
 - **Python 2.7** *[download](https://www.python.org/ftp/python/2.7.12/python-2.7.12.msi)*
 - **Pygame** *[download](http://pygame.org/ftp/pygame-1.9.1.win32-py2.7.msi)*
 - *Optional:* **Pycharm** *[download](https://www.jetbrains.com/pycharm/download/download-thanks.html?platform=windows&code=PCC)*
+- To use **GitHub** with Pycharm: **(git)** [download](https://git-scm.com/download/win)
 
 ### Linux (Ubuntu):
 
 *To be run in sequence:*
 
     sudo -s
+    apt-get update
+    apt-get install -y git
     add-apt-repository -y ppa:fkrull/deadsnakes
     apt-get update
     apt-get install -y python2.7
