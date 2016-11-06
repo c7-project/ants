@@ -8,8 +8,8 @@ class Ant(pygame.sprite.Sprite):
         self.current_rotation = 0
         self.image = self.initial_image
         self.rect = self.image.get_rect()
-        self.rect.x = 5
-        self.rect.y = 5
+        self.rect.x = 450
+        self.rect.y = 300
 
     def rotate(self, angle):
         self.current_rotation += angle
@@ -40,7 +40,7 @@ def main():
     done = False  # The game loop is broken when done becomes True
 
     # Load background image resource
-    bg = pygame.image.load("images/{}.jpg".format("bg01a"))
+    bg = pygame.image.load("images/bg01a.jpg")
 
     ant1 = Ant()  # Create an ant
 
