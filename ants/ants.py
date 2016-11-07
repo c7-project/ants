@@ -1,12 +1,13 @@
 import pygame
-#import math
+import math
+from random import randint
 
 
 class Ant(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.initial_image = pygame.image.load("images/ant01a.png").convert_alpha()
-        self.current_rotation = 0
+        self.current_rotation = randint(0, 359)
         self.image = self.initial_image
         self.rect = self.image.get_rect()
         self.rect.x = 450
@@ -17,19 +18,25 @@ class Ant(pygame.sprite.Sprite):
         self.image = rotate_center(self.initial_image, self.current_rotation)
 
     def move(self, distance):
-        pass
+        self.detect_edge()
+        dx = math.cos(math.radians(self.current_rotation - 90))
+        dy = math.sin(math.radians(self.current_rotation - 90))
+        self.rect.x -= dx * distance
+        self.rect.y += dy * distance
+
+    def detect_edge(self):
+        if self.rect.x < 1 or self.rect.x > 875\
+                or self.rect.y < 1 or self.rect.y > 575:
+            self.current_rotation += randint(-80, 80)
 
 
-def text_objects(text, font):
-    text_surface = font.render(text, True, (255, 255, 255))
-    return text_surface, text_surface.get_rect()
-
-
-def display_text(screen, text):
-    text_format = pygame.font.Font(None, 18)
-    text_surf, text_rect = text_objects(text, text_format)
-    text_rect.center = (875, 10)
-    screen.blit(text_surf, text_rect)
+def display_text(screen, text, size, location):
+    # Create font
+    my_font = pygame.font.SysFont("monospace", size)
+    # Label text
+    label = my_font.render(text, 1, (250, 250, 250))
+    # Display text
+    screen.blit(label, location)
 
 
 def rotate_center(image, angle):
@@ -41,6 +48,10 @@ def rotate_center(image, angle):
     rotate_rect.center = rotate_image.get_rect().center
     rotate_image = rotate_image.subsurface(rotate_rect).copy()
     return rotate_image
+
+
+def get_random_ish_direction(max_degrees=10):
+    return randint(-max_degrees, max_degrees)
 
 
 def main():
@@ -58,15 +69,16 @@ def main():
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
 
-    ant1 = Ant()  # Create an ant
+    ant_list = [ Ant() for i in range(29)]
 
     # Create groups for objects
     ants = pygame.sprite.Group()
     holes = pygame.sprite.Group()
     rocks = pygame.sprite.Group()
 
-    # Add ant1 to ants list
-    ants.add(ant1)
+    # Add ants_list objects to ants list
+    for individual_ant in ant_list:
+        ants.add(individual_ant)
 
     # List of all sprites
     all_sprites = pygame.sprite.Group()
@@ -82,7 +94,11 @@ def main():
 
         # Rotate the ant - currently an experiment
         # Will be used for when the ant moves around on its own
-        ant1.rotate(4)
+        for ant in ant_list:
+            if randint(0, 2) == 0:
+                ant.rotate(get_random_ish_direction(14))
+            if randint(0, 3) > 0:
+                ant.move(2)
 
         # Draw all sprites group to the screen
         all_sprites.draw(screen)
@@ -96,7 +112,7 @@ def main():
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
                     done = True  # Exit
 
-        display_text(screen, "fps: " + str(int(round(clock.get_fps(), 0))))
+        display_text(screen, "fps:" + str(int(round(clock.get_fps(), 0))), 14, (850, 0))
 
         # Update display to show changes made in current iteration
         pygame.display.update()
