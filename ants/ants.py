@@ -23,15 +23,15 @@ class Ant(pygame.sprite.Sprite):
             self.direction += 360
         self.direction %= 360
 
-    def change_collision_direction(self, min_angle, max_angle):
-        if self.direction < min_angle:
+    def change_collision_direction(self, boundary_value):
+        if self.direction < boundary_value:
             self.direction -= randint(20, 30)
-        elif max_angle == 0:
+        elif boundary_value == 0:
             if self.direction > 270:
                 self.direction -= randint(20, 30)
             else:
                 self.direction += randint(20, 30)
-        elif self.direction > max_angle:
+        elif self.direction > boundary_value:
             self.direction += randint(20, 30)
         else:  # Facing edge
             magnitude = randint(30, 40)
@@ -43,13 +43,13 @@ class Ant(pygame.sprite.Sprite):
     def detect_edge(self):
         self.resolve_direction()
         if self.rect.x < 1:  # Left edge
-            self.change_collision_direction(90, 90)
+            self.change_collision_direction(90)
         if self.rect.x > 875:  # Right edge
-            self.change_collision_direction(270, 270)
+            self.change_collision_direction(270)
         if self.rect.y < 1:  # Top edge
-            self.change_collision_direction(0, 0)
+            self.change_collision_direction(0)
         if self.rect.y > 575:  # Bottom edge
-            self.change_collision_direction(180, 180)
+            self.change_collision_direction(180)
 
     def move(self, distance):
         self.detect_edge()
