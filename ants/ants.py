@@ -78,14 +78,6 @@ class Hole(pygame.sprite.Sprite):
 
 
 
-class Food(pygame.sprite.Sprite):
-    def __init__(self):
-        pygame.sprite.Sprite.__init__(self)
-        food_images = ["pictures/banana.png", "pictures/apple.png", "pictures/donut.png", "pictures/GrapeRedSeedless.png"]
-        self.image = pygame.image.load(choice(food_images)).convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.x = randint(1, 875)
-        self.rect.y = randint(1, 575)
 
     
 
@@ -138,7 +130,7 @@ def main():
 
     ant_list = [Ant() for i in range(40)]
     hole_list = [Hole() for i in range(3)]
-    food_list = [Food() for i in range(10)]
+
 
    
 
@@ -157,8 +149,7 @@ def main():
     for individual_hole in hole_list:
         holes.add(individual_hole)
 
-    for individual_meal in food_list:
-        food.add(individual_meal)
+    
 
     # List of all sprites
     all_sprites = pygame.sprite.Group()
