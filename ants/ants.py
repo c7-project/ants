@@ -1,7 +1,6 @@
 import pygame
 import math
-from random import randint, choice
-
+from random import randint
 
 
 class Ant(pygame.sprite.Sprite):
@@ -46,7 +45,7 @@ class Ant(pygame.sprite.Sprite):
         if self.rect.x < 1:  # Left edge
             self.change_collision_direction(90)
         if self.rect.x > 875:  # Right edge
-            self.change_collision_direction(90)
+            self.change_collision_direction(270)
         if self.rect.y < 1:  # Top edge
             self.change_collision_direction(0)
         if self.rect.y > 575:  # Bottom edge
@@ -119,11 +118,6 @@ def main():
     ant_list = [Ant() for i in range(40)]
     hole_list = [Hole() for i in range(3)]
 
-
-   
-
-
-
     # Create groups for objects
     ants = pygame.sprite.Group()
     holes = pygame.sprite.Group()
@@ -137,8 +131,6 @@ def main():
     for individual_hole in hole_list:
         holes.add(individual_hole)
 
-
-
     # List of all sprites
     all_sprites = pygame.sprite.Group()
     # Add sprite groups to main group
@@ -150,8 +142,6 @@ def main():
         clock.tick(60)  # Frame-rate
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
-
-
 
         # Rotate the ant - currently an experiment
         # Will be used for when the ant moves around on its own
