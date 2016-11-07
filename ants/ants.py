@@ -7,27 +7,64 @@ class Ant(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.initial_image = pygame.image.load("images/ant01a.png").convert_alpha()
-        self.current_rotation = randint(0, 359)
+        self.direction = randint(0, 359)
         self.image = self.initial_image
         self.rect = self.image.get_rect()
         self.rect.x = 450
         self.rect.y = 300
+        self.stop_count = 0
 
     def rotate(self, angle):
-        self.current_rotation += angle
-        self.image = rotate_center(self.initial_image, self.current_rotation)
+        self.direction += angle
+        self.image = rotate_center(self.initial_image, self.direction)
+
+    def resolve_direction(self):
+        while self.direction < 0:
+            self.direction += 360
+        self.direction %= 360
+
+    def change_collision_direction(self, min_angle, max_angle):
+        if self.direction < min_angle:
+            self.direction -= randint(20, 30)
+        elif max_angle == 0:
+            if self.direction > 270:
+                self.direction -= randint(20, 30)
+            else:
+                self.direction += randint(20, 30)
+        elif self.direction > max_angle:
+            self.direction += randint(20, 30)
+        else:  # Facing edge
+            magnitude = randint(30, 40)
+            if randint(0, 1) == 0:
+                self.direction += magnitude
+            else:
+                self.direction -= magnitude
+
+    def detect_edge(self):
+        self.resolve_direction()
+        if self.rect.x < 1:  # Left edge
+            self.change_collision_direction(90, 90)
+        if self.rect.x > 875:  # Right edge
+            self.change_collision_direction(270, 270)
+        if self.rect.y < 1:  # Top edge
+            self.change_collision_direction(0, 0)
+        if self.rect.y > 575:  # Bottom edge
+            self.change_collision_direction(180, 180)
 
     def move(self, distance):
         self.detect_edge()
-        dx = math.cos(math.radians(self.current_rotation - 90))
-        dy = math.sin(math.radians(self.current_rotation - 90))
+        dx = (math.cos(math.radians(self.direction - 90)))
+        dy = (math.sin(math.radians(self.direction - 90)))
+        if dx < 0:
+            dx *= 1.5
+        if dy > 0:
+            dy *= 1.5
+        # print(str(dx) + " and " + str(dy))
         self.rect.x -= dx * distance
         self.rect.y += dy * distance
 
-    def detect_edge(self):
-        if self.rect.x < 1 or self.rect.x > 875\
-                or self.rect.y < 1 or self.rect.y > 575:
-            self.current_rotation += randint(-80, 80)
+    def stop(self, iterations):
+        self.stop_count += iterations
 
 
 def display_text(screen, text, size, location):
@@ -69,7 +106,7 @@ def main():
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
 
-    ant_list = [ Ant() for i in range(29)]
+    ant_list = [Ant() for i in range(40)]
 
     # Create groups for objects
     ants = pygame.sprite.Group()
@@ -95,10 +132,15 @@ def main():
         # Rotate the ant - currently an experiment
         # Will be used for when the ant moves around on its own
         for ant in ant_list:
-            if randint(0, 2) == 0:
-                ant.rotate(get_random_ish_direction(14))
-            if randint(0, 3) > 0:
-                ant.move(2)
+            if ant.stop_count > 0:  # If need to wait for stop
+                ant.stop_count -= 1
+            else:  # Rotate and/or move or neither
+                if randint(0, 2) == 0:  # Rotate
+                    ant.rotate(get_random_ish_direction(14))
+                if randint(0, 7) > 0:  # Move
+                    ant.move(2)
+                if randint(0, 150) == 0:
+                    ant.stop(randint(10, 40))
 
         # Draw all sprites group to the screen
         all_sprites.draw(screen)
