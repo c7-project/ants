@@ -77,18 +77,6 @@ class Hole(pygame.sprite.Sprite):
         self.rect.y = randint(1, 575)
 
 
-
-
-    
-
-
-
-
-
-
-
-
-
 def display_text(screen, text, size, location):
     # Create font
     my_font = pygame.font.SysFont("monospace", size)
@@ -149,7 +137,7 @@ def main():
     for individual_hole in hole_list:
         holes.add(individual_hole)
 
-    
+
 
     # List of all sprites
     all_sprites = pygame.sprite.Group()
@@ -163,9 +151,7 @@ def main():
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
 
-        hits = pygame.sprite.spritecollide(ants, Hole, False, pygame.sprite.collide_circle)
-        if hits:
-            done = True
+
 
         # Rotate the ant - currently an experiment
         # Will be used for when the ant moves around on its own
