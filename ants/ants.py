@@ -1,6 +1,7 @@
 import pygame
 import math
-from random import randint
+from random import randint, choice
+
 
 
 class Ant(pygame.sprite.Sprite):
@@ -45,7 +46,7 @@ class Ant(pygame.sprite.Sprite):
         if self.rect.x < 1:  # Left edge
             self.change_collision_direction(90)
         if self.rect.x > 875:  # Right edge
-            self.change_collision_direction(270)
+            self.change_collision_direction(90)
         if self.rect.y < 1:  # Top edge
             self.change_collision_direction(0)
         if self.rect.y > 575:  # Bottom edge
@@ -65,6 +66,35 @@ class Ant(pygame.sprite.Sprite):
 
     def stop(self, iterations):
         self.stop_count += iterations
+
+
+class Hole(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("images/hole01a.png").convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = randint(1, 875)
+        self.rect.y = randint(1, 575)
+
+
+
+class Food(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        food_images = ["pictures/banana.png", "pictures/apple.png", "pictures/donut.png", "pictures/GrapeRedSeedless.png"]
+        self.image = pygame.image.load(choice(food_images)).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.x = randint(1, 875)
+        self.rect.y = randint(1, 575)
+
+    
+
+
+
+
+
+
+
 
 
 def display_text(screen, text, size, location):
@@ -107,20 +137,33 @@ def main():
     bg = pygame.image.load("images/bg01a.jpg")
 
     ant_list = [Ant() for i in range(40)]
+    hole_list = [Hole() for i in range(3)]
+    food_list = [Food() for i in range(10)]
+
+   
+
+
 
     # Create groups for objects
     ants = pygame.sprite.Group()
     holes = pygame.sprite.Group()
     rocks = pygame.sprite.Group()
+    food = pygame.sprite.Group()
 
     # Add ants_list objects to ants list
     for individual_ant in ant_list:
         ants.add(individual_ant)
 
+    for individual_hole in hole_list:
+        holes.add(individual_hole)
+
+    for individual_meal in food_list:
+        food.add(individual_meal)
+
     # List of all sprites
     all_sprites = pygame.sprite.Group()
     # Add sprite groups to main group
-    all_sprites.add(ants, holes, rocks)
+    all_sprites.add(ants, holes, rocks, food)
     # pygame clock
     clock = pygame.time.Clock()
 
@@ -128,6 +171,10 @@ def main():
         clock.tick(60)  # Frame-rate
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
+
+        hits = pygame.sprite.spritecollide(ants, Hole, False, pygame.sprite.collide_circle)
+        if hits:
+            done = True
 
         # Rotate the ant - currently an experiment
         # Will be used for when the ant moves around on its own
