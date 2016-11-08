@@ -13,6 +13,7 @@ class Ant(pygame.sprite.Sprite):
         self.rect.x = 450
         self.rect.y = 300
         self.stop_count = 0
+        self.random_rotate = True
 
     def rotate(self, angle):
         self.direction += angle
@@ -22,6 +23,46 @@ class Ant(pygame.sprite.Sprite):
         while self.direction < 0:
             self.direction += 360
         self.direction %= 360
+
+    def turn_from_corner(self):
+        """
+        If ant moves towards corner, start turning away.
+
+        This needs to be refactored a lot - maybe a method for each 'if'.
+        """
+        self_x = self.rect.x
+        self_y = self.rect.y
+        direction = self.direction
+        random_rotate = False
+
+        if self_x <= 30 and self_y <= 30:  # Top left corner
+            if 45 < direction < 225:  # Towards left
+                direction += randint(8, 14)
+            else:  # Towards top
+                direction -= randint(8, 14)
+
+        elif self_x >= 846 and self_y <= 30:  # Top right corner
+            if 135 < direction < 315:  # Towards right
+                direction -= randint(8, 14)
+            else:  # Towards top
+                direction += randint(8, 14)
+
+        elif self_x <= 30 and self_y >= 546:  # Bottom left corner
+            if 135 < direction < 315:  # Towards bottom
+                direction += randint(8, 14)
+            else:  # Towards left
+                direction -= randint(8, 14)
+
+        elif self_x >= 846 and self_y >= 546:  # Bottom right corner
+            if 45 < direction < 225:  # Towards bottom
+                direction -= randint(4, 8)
+            else:  # Towards right
+                direction += randint(4, 8)
+
+        else:  # Not in any corners
+            random_rotate = True
+        self.random_rotate = random_rotate
+        self.direction = direction
 
     def change_collision_direction(self, boundary_value):
         if self.direction < boundary_value:
@@ -42,6 +83,7 @@ class Ant(pygame.sprite.Sprite):
 
     def detect_edge(self):
         self.resolve_direction()
+        self.turn_from_corner()
         if self.rect.x < 1:  # Left edge
             self.change_collision_direction(90)
         if self.rect.x > 875:  # Right edge
@@ -59,7 +101,6 @@ class Ant(pygame.sprite.Sprite):
             dx *= 1.5
         if dy > 0:
             dy *= 1.5
-        # print(str(dx) + " and " + str(dy))
         self.rect.x -= dx * distance
         self.rect.y += dy * distance
 
@@ -77,17 +118,14 @@ class Hole(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images/hole01a.png").convert_alpha()
         self.rect = self.image.get_rect()
-        x = randint(1, 875)
-        y = randint(1, 575)
+        x = randint(1, 838)
+        y = randint(1, 538)
         if x not in Hole.keys and y not in Hole.values:
             self.rect.x = x
             self.rect.y = y
             Hole.previous_coordinates[self.rect.x] = self.rect.y
         else:
             self.__init__()
-
-
-
 
 
 def display_text(screen, text, size, location):
@@ -129,7 +167,7 @@ def main():
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
 
-    ant_list = [Ant() for i in range(40)]
+    ant_list = [Ant() for i in range(5)]
     hole_list = [Hole() for i in range(3)]
 
     # Create groups for objects
