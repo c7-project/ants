@@ -167,7 +167,7 @@ def main():
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
 
-    ant_list = [Ant() for i in range(5)]
+    ant_list = [Ant() for i in range(40)]
     hole_list = [Hole() for i in range(3)]
 
     # Create groups for objects
