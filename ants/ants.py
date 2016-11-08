@@ -3,7 +3,6 @@ import math
 from random import randint
 
 
-
 class Ant(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -52,7 +51,6 @@ class Ant(pygame.sprite.Sprite):
         if self.rect.y > 575:  # Bottom edge
             self.change_collision_direction(180)
 
-
     def move(self, distance):
         self.detect_edge()
         dx = (math.cos(math.radians(self.direction - 90)))
@@ -70,25 +68,12 @@ class Ant(pygame.sprite.Sprite):
 
 
 class Hole(pygame.sprite.Sprite):
-    previous_coordinates = {}
-    keys = previous_coordinates.keys()
-    values = previous_coordinates.values()
-
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images/hole01a.png").convert_alpha()
         self.rect = self.image.get_rect()
-        x = randint(1, 875)
-        y = randint(1, 575)
-        if x not in Hole.keys and y not in Hole.values:
-            self.rect.x = x
-            self.rect.y = y
-            Hole.previous_coordinates[self.rect.x] = self.rect.y
-
-        else:
-            self.__init__()
-
-
+        self.rect.x = randint(1, 875)
+        self.rect.y = randint(1, 575)
 
 
 def display_text(screen, text, size, location):
@@ -133,11 +118,6 @@ def main():
     ant_list = [Ant() for i in range(40)]
     hole_list = [Hole() for i in range(3)]
 
-
-   
-
-
-
     # Create groups for objects
     ants = pygame.sprite.Group()
     holes = pygame.sprite.Group()
@@ -151,8 +131,6 @@ def main():
     for individual_hole in hole_list:
         holes.add(individual_hole)
 
-
-
     # List of all sprites
     all_sprites = pygame.sprite.Group()
     # Add sprite groups to main group
@@ -164,8 +142,6 @@ def main():
         clock.tick(60)  # Frame-rate
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
-
-
 
         # Rotate the ant - currently an experiment
         # Will be used for when the ant moves around on its own
