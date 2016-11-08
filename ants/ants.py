@@ -1,6 +1,6 @@
 import pygame
 import math
-from random import randint, choice
+from random import randint
 
 
 
@@ -46,11 +46,12 @@ class Ant(pygame.sprite.Sprite):
         if self.rect.x < 1:  # Left edge
             self.change_collision_direction(90)
         if self.rect.x > 875:  # Right edge
-            self.change_collision_direction(90)
+            self.change_collision_direction(270)
         if self.rect.y < 1:  # Top edge
             self.change_collision_direction(0)
         if self.rect.y > 575:  # Bottom edge
             self.change_collision_direction(180)
+
 
     def move(self, distance):
         self.detect_edge()
@@ -69,12 +70,25 @@ class Ant(pygame.sprite.Sprite):
 
 
 class Hole(pygame.sprite.Sprite):
+    previous_coordinates = {}
+    keys = previous_coordinates.keys()
+    values = previous_coordinates.values()
+
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images/hole01a.png").convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = randint(1, 875)
-        self.rect.y = randint(1, 575)
+        x = randint(1, 875)
+        y = randint(1, 575)
+        if x not in Hole.keys and y not in Hole.values:
+            self.rect.x = x
+            self.rect.y = y
+            Hole.previous_coordinates[self.rect.x] = self.rect.y
+
+        else:
+            self.__init__()
+
+
 
 
 def display_text(screen, text, size, location):
