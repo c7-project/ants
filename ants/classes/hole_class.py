@@ -1,8 +1,13 @@
 import pygame
 from random import randint
 
+hole_locations = []  # List of the [x, y] coordinates of existing holes
+
 
 class Hole(pygame.sprite.Sprite):
+    """
+    Holes: The ants' door to the underworld
+    """
     # Creates holes randomly spread across the arena, making sure they don't appear twice at the same point.
     previous_coordinates = {}
     keys = previous_coordinates.keys()

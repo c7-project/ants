@@ -2,6 +2,8 @@ import pygame
 from random import randint
 import math
 
+ants_underground = 30  # Number of ants currently underground
+
 
 class Ant(pygame.sprite.Sprite):
     """

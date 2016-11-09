@@ -1,20 +1,9 @@
 from random import randint
 import pygame
-import ant_class
-import hole_class
 
-
-def display_text(screen, text, size, location):
-    # Create font
-    my_font = pygame.font.SysFont("monospace", size)
-    # Label text
-    label = my_font.render(text, 1, (250, 250, 250))
-    # Display text
-    screen.blit(label, location)
-
-
-def get_random_ish_direction(max_degrees=10):
-    return randint(-max_degrees, max_degrees)
+from classes import ant_class  # Ant
+from classes import hole_class  # Hole
+from classes import misc  # Methods
 
 
 def main():
@@ -67,7 +56,7 @@ def main():
                 ant.stop_count -= 1
             else:  # Rotate and/or move or neither
                 if randint(0, 2) == 0:  # Rotate
-                    ant.rotate(get_random_ish_direction(14))
+                    ant.rotate(misc.get_random_ish_direction(14))
                 if randint(0, 7) > 0:  # Move
                     ant.move(2)
                 if randint(0, 150) == 0:
@@ -85,7 +74,7 @@ def main():
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
                     done = True  # Exit
 
-        display_text(screen, "fps:" + str(int(round(clock.get_fps(), 0))), 14, (850, 0))
+        misc.display_text(screen, "fps:" + str(int(round(clock.get_fps(), 0))), 14, (850, 0))
 
         # Update display to show changes made in current iteration
         pygame.display.update()
