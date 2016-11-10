@@ -49,7 +49,7 @@ def main():
     clock = pygame.time.Clock()
 
     while not done:  # Main game loop
-        clock.tick(60)  # Frame-rate
+        clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
 
@@ -60,11 +60,11 @@ def main():
                 ant.stop_count -= 1
             else:  # Rotate and/or move or neither
                 if randint(0, 2) == 0:  # Rotate
-                    ant.rotate(misc.get_random_ish_direction(14))
+                    ant.rotate(misc.get_random_ish_direction(24))
                 if randint(0, 7) > 0:  # Move
-                    ant.move(2)
-                if randint(0, 200) == 0:  # Stop
-                    ant.stop(randint(10, 40))
+                    ant.move(3)
+                if randint(0, 180) == 0:  # Stop
+                    ant.stop(randint(8, 22))
 
         # Draw all sprites group to the screen
         holes.draw(screen)
