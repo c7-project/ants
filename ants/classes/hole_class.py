@@ -10,8 +10,8 @@ class Hole(pygame.sprite.Sprite):
     """
     # Creates holes randomly spread across the arena, making sure they don't appear twice at the same point.
     previous_coordinates = {}
-    keys = previous_coordinates.keys()
-    values = previous_coordinates.values()
+    x_coordinates = previous_coordinates.keys()
+    y_coordinates = previous_coordinates.values()
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -19,7 +19,7 @@ class Hole(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         x = randint(1, 838)
         y = randint(1, 538)
-        if x not in Hole.keys and y not in Hole.values:
+        if x not in Hole.previous_coordinates and y not in Hole.previous_coordinates:
             self.rect.x = x
             self.rect.y = y
             Hole.previous_coordinates[self.rect.x] = self.rect.y
