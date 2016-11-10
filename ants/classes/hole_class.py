@@ -1,7 +1,8 @@
 import pygame
 from random import randint
 
-hole_locations = [[900, 600]]  # List of the [x, y] coordinates of existing holes
+# List of the [x, y] coordinates of existing holes
+hole_locations = [[900, 600]]
 
 
 class Hole(pygame.sprite.Sprite):
@@ -31,5 +32,4 @@ class Hole(pygame.sprite.Sprite):
             if valid_count == len(hole_locations):
                 valid_location = True
         hole_locations.append([x, y])
-        print(hole_locations)
         self.rect.x, self.rect.y = x, y

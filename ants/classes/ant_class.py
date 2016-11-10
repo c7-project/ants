@@ -13,7 +13,8 @@ class Ant(pygame.sprite.Sprite):
     """
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.initial_image = pygame.image.load("images/ant01a.png").convert_alpha()
+        self.initial_image = pygame.image.load(
+            "images/ant01a.png").convert_alpha()
         self.direction = randint(0, 359)
         self.image = self.initial_image
         self.rect = self.image.get_rect()

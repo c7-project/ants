@@ -19,7 +19,8 @@ def main():
     misc.display_text(screen, "loading...", 28, (20, 20))
     pygame.display.update()  # Update to loading screen
 
-    pygame.display.set_caption("Ants: An Artificial Intelligence Experiment by C7")
+    pygame.display.set_caption(
+        "Ants: An Artificial Intelligence Experiment by C7")
     done = False  # The game loop is broken when done becomes True
 
     # Load background image resource
@@ -79,7 +80,8 @@ def main():
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
                     done = True  # Exit
 
-        misc.display_text(screen, "fps:" + str(int(round(clock.get_fps(), 0))), 14, (850, 0))
+        misc.display_text(
+            screen, "fps:" + str(int(round(clock.get_fps(), 0))), 14, (850, 0))
 
         # Update display to show changes made in current iteration
         pygame.display.update()
