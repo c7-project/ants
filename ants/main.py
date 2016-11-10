@@ -21,7 +21,7 @@ def main():
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
 
-    ant_list = [ant_class.Ant() for i in range(40)]
+    ant_list = [ant_class.Ant() for i in range(30)]
     hole_list = [hole_class.Hole() for i in range(3)]
 
     # Create groups for objects
@@ -59,7 +59,7 @@ def main():
                     ant.rotate(misc.get_random_ish_direction(14))
                 if randint(0, 7) > 0:  # Move
                     ant.move(2)
-                if randint(0, 150) == 0:
+                if randint(0, 200) == 0:  # Stop
                     ant.stop(randint(10, 40))
 
         # Draw all sprites group to the screen

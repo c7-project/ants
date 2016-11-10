@@ -2,6 +2,8 @@ import pygame
 from random import randint
 import math
 
+import misc
+
 ants_underground = 30  # Number of ants currently underground
 
 
@@ -15,14 +17,14 @@ class Ant(pygame.sprite.Sprite):
         self.direction = randint(0, 359)
         self.image = self.initial_image
         self.rect = self.image.get_rect()
-        self.rect.x = 450
-        self.rect.y = 300
+        self.rect.x = randint(1, 879)
+        self.rect.y = randint(1, 579)
         self.stop_count = 0
         self.random_rotate = True
 
     def rotate(self, angle):
         self.direction += angle
-        self.image = rotate_center(self.initial_image, self.direction)
+        self.image = misc.rotate_center(self.initial_image, self.direction)
 
     def resolve_direction(self):
         while self.direction < 0:
@@ -111,14 +113,3 @@ class Ant(pygame.sprite.Sprite):
 
     def stop(self, iterations):
         self.stop_count += iterations
-
-
-def rotate_center(image, angle):
-    """rotate an image while keeping its center and size"""
-    # From http://pygame.org/wiki/RotateCenter
-    orig_rect = image.get_rect()
-    rotate_image = pygame.transform.rotate(image, angle)
-    rotate_rect = orig_rect.copy()
-    rotate_rect.center = rotate_image.get_rect().center
-    rotate_image = rotate_image.subsurface(rotate_rect).copy()
-    return rotate_image
