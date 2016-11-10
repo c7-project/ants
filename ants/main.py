@@ -14,8 +14,12 @@ def main():
     """
     pygame.init()  # Initialise pygame
     # Set window title
-    pygame.display.set_caption("Ants: An Artificial Intelligence Experiment by C7")
     screen = pygame.display.set_mode((900, 600))  # Set window size
+
+    misc.display_text(screen, "loading...", 28, (20, 20))
+    pygame.display.update()  # Update to loading screen
+
+    pygame.display.set_caption("Ants: An Artificial Intelligence Experiment by C7")
     done = False  # The game loop is broken when done becomes True
 
     # Load background image resource
