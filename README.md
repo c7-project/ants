@@ -31,7 +31,7 @@ To install Pycharm, continue to run these commands:
     add-apt-repository -y ppa:mystic-mirage/pycharm
     apt-get update
     apt-get install -y pycharm-community
-    pycharm
+    pycharm-community
 
 ## Sources
 
