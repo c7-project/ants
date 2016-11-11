@@ -27,7 +27,7 @@ def main():
     bg = pygame.image.load("images/bg01a.jpg")
 
     ant_list = [ant_class.Ant() for i in range(30)]
-    hole_list = [hole_class.Hole() for i in range(5)]
+    hole_list = [hole_class.Hole() for i in range(50)]
 
     # Create groups for objects
     ants = pygame.sprite.Group()
