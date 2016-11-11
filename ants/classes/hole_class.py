@@ -16,6 +16,10 @@ def holes_manager(n):
            # the previous cx value in order to determine an appropriate value for the location of holes
            # within the random function
     ty = 1 # The same variable for the possible y values
+    randomness_constant = randint(1,5) #The logical distribution of the holes on the screen, makes them form a diagonal line,
+                                        # as the number of holes increases they tend to clash, this value moves them back and forth
+                                        # reducing the change that that might happen, the randomness_constant can be modified to adjust
+                                        # the distribution of the holes at will
     while True:
         if cx >= 875 and cy <= 575:
             break
