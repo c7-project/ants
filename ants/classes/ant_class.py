@@ -121,6 +121,10 @@ class Ant(pygame.sprite.Sprite):
             self.change_collision_direction(180)
 
     def move(self, distance):
+        """
+        Moves forwards in the ant's current direction
+        :param distance: How far the ant moves
+        """
         self.detect_edge()
         dx = (math.cos(math.radians(self.direction - 90)))
         dy = (math.sin(math.radians(self.direction - 90)))
@@ -133,6 +137,7 @@ class Ant(pygame.sprite.Sprite):
 
     def stop(self, iterations):
         """
-        Stops ant for a number of iterations
+        Stops ant for number of iterations
+        :param iterations:
         """
         self.stop_count += iterations

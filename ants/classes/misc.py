@@ -9,7 +9,6 @@ def display_text(screen, text, size, location):
     :param text: Text to be displayed
     :param size: Text size
     :param location: Location on screen
-    :return: None
     """
     # Create font
     my_font = pygame.font.SysFont("monospace", size)

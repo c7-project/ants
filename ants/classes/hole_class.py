@@ -9,7 +9,6 @@ class Hole(pygame.sprite.Sprite):
     """
     Holes: The ants' door to the underworld
     """
-
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images/hole01a.png").convert_alpha()
