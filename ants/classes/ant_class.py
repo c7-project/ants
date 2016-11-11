@@ -1,5 +1,6 @@
 import pygame
-from random import randint
+from random import randint, choice
+from hole_class import hole_locations
 import math
 
 import misc
@@ -18,8 +19,9 @@ class Ant(pygame.sprite.Sprite):
         self.direction = randint(0, 359)
         self.image = self.initial_image
         self.rect = self.image.get_rect()
-        self.rect.x = randint(1, 879)
-        self.rect.y = randint(1, 579)
+        coordinates = choice(hole_locations)
+        self.rect.x = coordinates[0]
+        self.rect.y = coordinates [1]
         self.stop_count = 0
         self.random_rotate = True
 
