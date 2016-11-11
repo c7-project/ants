@@ -5,19 +5,26 @@ from random import randint, choice
 hole_locations = []
 
 def holes_manager(n):
-    """
-    Distributes the holes across evenly-sized
+    # Distributes the holes across evenly-sized 
+    # squares whose area is the result of dividing
+    # the pixels by the desired number of holes
     x_values = 875//n
     y_values = 575//n
-    cx = 0
-    cy = 0
+    cx = 0 # The value is increased as holes are placed within the squares
+    cy = 0 # The same variable for the possible y values
+    tx = 0 # a possible solution to the problem, the variable is increased by 
+           # the previous cx value in order to determine an appropriate value for the location of holes
+           # within the random function
+    ty = 0 # The same variable for the possible y values
     while True:
         if cx >= 875 and cy <= 575:
             break
         cx += x_values
         cy += y_values
-        x = rantint(1,cx)
-        y = randint(1,cy)
+        x = rantint(t1,cx)
+        y = randint(t2,cy)
+        t1 += cx 
+        t2 += cy
         hole_locations.append([x, y])
 
 
