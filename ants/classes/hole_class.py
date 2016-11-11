@@ -26,10 +26,10 @@ def holes_manager(n):
             break
         cx += x_values
         cy += y_values
-        x = rantint(t1,cx)
-        y = randint(t2,cy)
-        t1 += x_values
-        t2 += y_valus
+        x = randint(tx,cx)
+        y = randint(ty,cy)
+        tx += x_values
+        ty += y_values
         hole_locations.append([x, y])
 
 
