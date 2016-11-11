@@ -24,10 +24,23 @@ class Ant(pygame.sprite.Sprite):
         self.random_rotate = True
 
     def rotate(self, angle):
+        """
+        Calls misc.rotate_center to rotate ant based on initial image
+
+        Negative angle: clockwise rotation
+        Positive angle: anticlockwise rotation
+
+        :param angle: The angle (degrees) to rotate the ant
+        """
         self.direction += angle
         self.image = misc.rotate_center(self.initial_image, self.direction)
 
     def resolve_direction(self):
+        """
+        Over many rotations, self.direction can get too high or low
+
+        This method converts self.direction to its 0-359 degree equivalent
+        """
         while self.direction < 0:
             self.direction += 360
         self.direction %= 360
@@ -73,6 +86,9 @@ class Ant(pygame.sprite.Sprite):
         self.direction = direction
 
     def change_collision_direction(self, boundary_value):
+        """
+        This responds to when an ant hits a wall by changing its direction
+        """
         if self.direction < boundary_value:
             self.direction -= randint(20, 30)
         elif boundary_value == 0:
@@ -90,6 +106,9 @@ class Ant(pygame.sprite.Sprite):
                 self.direction -= magnitude
 
     def detect_edge(self):
+        """
+        Detects when an ant hits a border
+        """
         self.resolve_direction()
         self.turn_from_corner()
         if self.rect.x < 1:  # Left edge
@@ -113,4 +132,7 @@ class Ant(pygame.sprite.Sprite):
         self.rect.y += dy * distance
 
     def stop(self, iterations):
+        """
+        Stops ant for a number of iterations
+        """
         self.stop_count += iterations
