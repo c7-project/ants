@@ -61,27 +61,27 @@ class Ant(pygame.sprite.Sprite):
 
         if self_x <= 30 and self_y <= 30:  # Top left corner
             if 45 < direction < 225:  # Towards left
-                direction += randint(8, 14)
+                direction += randint(14, 24)
             else:  # Towards top
-                direction -= randint(8, 14)
+                direction -= randint(14, 24)
 
         elif self_x >= 846 and self_y <= 30:  # Top right corner
             if 135 < direction < 315:  # Towards right
-                direction -= randint(8, 14)
+                direction -= randint(14, 24)
             else:  # Towards top
-                direction += randint(8, 14)
+                direction += randint(14, 24)
 
         elif self_x <= 30 and self_y >= 546:  # Bottom left corner
             if 135 < direction < 315:  # Towards bottom
-                direction += randint(8, 14)
+                direction += randint(14, 24)
             else:  # Towards left
-                direction -= randint(8, 14)
+                direction -= randint(14, 24)
 
         elif self_x >= 846 and self_y >= 546:  # Bottom right corner
             if 45 < direction < 225:  # Towards bottom
-                direction -= randint(4, 8)
+                direction -= randint(14, 24)
             else:  # Towards right
-                direction += randint(4, 8)
+                direction += randint(14, 24)
 
         else:  # Not in any corners
             random_rotate = True

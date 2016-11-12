@@ -1,6 +1,9 @@
 # Pycharm .idea
 .idea/
 
+# pygame rendered frames
+ants/frames/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

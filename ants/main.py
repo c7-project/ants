@@ -4,6 +4,7 @@ import pygame
 from classes import ant_class  # Ant
 from classes import hole_class  # Hole
 from classes import misc  # Methods
+from classes import video
 
 
 def main():
@@ -90,11 +91,13 @@ def main():
         # Update all sprites
         all_sprites.update()
 
-        misc.display_text(
-            screen, "fps:" + str(int(round(clock.get_fps(), 0))), 14, (850, 0))
+        fps_value = video.get_fps(clock)  # Get fps value
+        misc.display_text(screen, "fps:" + fps_value, 14, (850, 0))
 
         # Update display to show changes made in current iteration
         pygame.display.update()
 
+        # Save frame if video.video_mode
+        video.save_screen(screen)
 
 main()
