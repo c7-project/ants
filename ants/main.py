@@ -26,8 +26,8 @@ def main():
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
 
-    ant_list = [ant_class.Ant() for i in range(30)]
-    hole_list = [hole_class.Hole() for i in range(5)]
+    hole_list = [hole_class.Hole() for i in range(5)]  # Generate holes
+    ant_list = [ant_class.Ant() for i in range(0)]  # Generate initial ants
 
     # Create groups for objects
     ants = pygame.sprite.Group()
@@ -50,12 +50,29 @@ def main():
     clock = pygame.time.Clock()
 
     while not done:  # Main game loop
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # If close button
+                done = True  # Exit
+            if event.type == pygame.KEYDOWN:  # If key pressed
+                if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
+                    done = True  # Exit
+
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
 
-        # Rotate the ant - currently an experiment
-        # Will be used for when the ant moves around on its own
+        if hole_list:  # Means 'if there are hole(s)'
+            if ant_class.ants_underground > 0 and randint(0, 14) == 0:
+                # Spawn new ant
+                ant_list.append(ant_class.Ant())  # Add to ant list
+                ants.add(ant_list[-1])  # Add it to ants sprite group
+                ant_class.ants_underground -= 1  # Decrement underground count
+        else:  # No holes exist
+            misc.display_text(
+                screen,
+                "Press 'W' to add a hole at the mouse's location",
+                18, (0, 0))
+
         for ant in ant_list:
             if ant.stop_count > 0:  # If need to wait for stop
                 ant.stop_count -= 1
@@ -72,13 +89,6 @@ def main():
         ants.draw(screen)
         # Update all sprites
         all_sprites.update()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:  # If close button
-                done = True  # Exit
-            if event.type == pygame.KEYDOWN:  # If key pressed
-                if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
-                    done = True  # Exit
 
         misc.display_text(
             screen, "fps:" + str(int(round(clock.get_fps(), 0))), 14, (850, 0))

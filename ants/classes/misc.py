@@ -1,5 +1,6 @@
 import pygame
-from random import randint
+from random import randint, choice
+import hole_class  # Used in ant_from_hole
 
 
 def display_text(screen, text, size, location):
@@ -38,3 +39,14 @@ def rotate_center(image, angle):
     rotate_rect.center = rotate_image.get_rect().center
     rotate_image = rotate_image.subsurface(rotate_rect).copy()
     return rotate_image
+
+
+def ant_from_hole():
+    """
+    Get the coordinates of the centre of a random hole
+    :return: x and y coordinates
+    """
+    random_hole = choice(hole_class.hole_locations)
+    x = random_hole[0] + 18
+    y = random_hole[1] + 18
+    return x, y

@@ -11,15 +11,18 @@ class Ant(pygame.sprite.Sprite):
     """
     Ants and their many mysterious methods
     """
-    def __init__(self):
+    def __init__(self, from_hole=True):
         pygame.sprite.Sprite.__init__(self)
         self.initial_image = pygame.image.load(
             "images/ant01a.png").convert_alpha()
         self.direction = randint(0, 359)
         self.image = self.initial_image
         self.rect = self.image.get_rect()
-        self.rect.x = randint(1, 879)
-        self.rect.y = randint(1, 579)
+        if from_hole:
+            self.rect.x, self.rect.y = misc.ant_from_hole()
+        else:
+            self.rect.x = randint(1, 879)
+            self.rect.y = randint(1, 579)
         self.stop_count = 0
         self.random_rotate = True
 
