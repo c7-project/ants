@@ -4,7 +4,7 @@ import pygame
 from classes import ant_class  # Ant
 from classes import hole_class  # Hole
 from classes import misc  # Methods
-from classes import video
+from classes import video #Video 
 
 
 def main():
