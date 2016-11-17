@@ -45,8 +45,8 @@ class Ant(pygame.sprite.Sprite):
         This method converts self.direction to its 0-359 degree equivalent
         """
         while self.direction < 0:
-            self.direction += 360
-        self.direction %= 360
+            self.direction += 360  # Makes direction positive
+        self.direction %= 360  # Calculates direction's lowest equivalent
 
     def turn_from_corner(self):
         """
