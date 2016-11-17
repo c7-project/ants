@@ -74,16 +74,7 @@ def main():
                 "Press 'W' to add a hole at the mouse's location",
                 18, (0, 0))
 
-        for ant in ant_list:
-            if ant.stop_count > 0:  # If need to wait for stop
-                ant.stop_count -= 1
-            else:  # Rotate and/or move or neither
-                if randint(0, 2) == 0:  # Rotate
-                    ant.rotate(misc.get_random_ish_direction(24))
-                if randint(0, 7) > 0:  # Move
-                    ant.move(3)
-                if randint(0, 180) == 0:  # Stop
-                    ant.stop(randint(8, 22))
+        ant_list = misc.move_ants(ant_list)  # by Jim
 
         # Draw all sprites group to the screen
         holes.draw(screen)
