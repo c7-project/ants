@@ -68,4 +68,11 @@ def move_ants(ant_list):
     return new_list
 
 
-
+def check_colliding(s1, s2):
+    """
+    Checks whether or not ant is on a hole
+    :param s1: The ant
+    :param s2: The hole centre
+    :return: True if the ant is on the hole
+    """
+    return pygame.sprite.collide_rect(s1, s2)
