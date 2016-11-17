@@ -1,7 +1,7 @@
 import os
 import pygame
 
-video_mode = False  # If true, frames are saved
+video_mode = True  # If true, frames are saved
 
 current_frame = 1
 path_checked = False
