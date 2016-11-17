@@ -72,7 +72,7 @@ class Ant(pygame.sprite.Sprite):
                 direction += randint(14, 24)
 
         elif self_x <= 30 and self_y >= 546:  # Bottom left corner
-            if 135 < direction < 315:  # Towards bottom
+            if 135 < direction < 315:  # Towards bottom testssss
                 direction += randint(14, 24)
             else:  # Towards left
                 direction -= randint(14, 24)
