@@ -20,7 +20,7 @@ class Hole(pygame.sprite.Sprite):
 
 def get_valid_hole_location():
     """
-    Run through hole_locations in search for new a new valid hole location
+    Run through hole_locations in search for a new valid hole location
     :return: The valid x and y coordinates
     """
     valid_location = False  # First assume the location is not valid
