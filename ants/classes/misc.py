@@ -1,5 +1,5 @@
 import pygame
-from random import randint, choice
+from random import randint, choice # random function
 import hole_class  # Used in ant_from_hole
 
 
@@ -18,7 +18,7 @@ def display_text(screen, text, size, location):
     # Display text
     screen.blit(label, location)
 
-
+# random direct generator for ants
 def get_random_ish_direction(max_degrees=10):
     """
     Random direction generator
