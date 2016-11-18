@@ -3,6 +3,7 @@ import pygame
 
 from classes import ant_class  # Ant
 from classes import hole_class  # Hole
+from classes import sugar_class  # Sugar
 from classes import misc  # Other methods
 from classes import video  # Video
 from classes import logger  # Print to command line
@@ -39,12 +40,16 @@ def main():
     initial_ants = 0
     ant_list = [ant_class.Ant() for i in range(initial_ants)]
     logger.log("Generated {} ants".format(str(initial_ants)), important=True)
+    initial_sugar = 0
+    sugar_list = [sugar_class.Sugar() for i in range(initial_sugar)]
+    logger.log("Generated {} sugar".format(str(initial_sugar)),important=True)
+
 
     # Create groups for objects
     ants = pygame.sprite.Group()
     holes = pygame.sprite.Group()
     rocks = pygame.sprite.Group()
-    food = pygame.sprite.Group()
+    sugar = pygame.sprite.Group()
     logger.log("Set up sprite groups", important=True)
 
     # Add ants_list objects to ants list
@@ -62,7 +67,7 @@ def main():
     all_sprites = pygame.sprite.Group()
     logger.log("Created all_sprites group", important=True)
     # Add sprite groups to main group
-    all_sprites.add(ants, holes, rocks, food)
+    all_sprites.add(ants, holes, rocks, sugar)
     logger.log("Added Groups to all_sprites Group", important=True)
     # pygame clock
     clock = pygame.time.Clock()
@@ -80,6 +85,10 @@ def main():
                 elif event.key == pygame.K_h:  # If 'h' is pressed
                     hole_list.append(hole_class.Hole(at_mouse=True))
                     holes.add(hole_list[-1])
+                elif event.key == pygame.K_s: # If 's' is pressed
+                    sugar_list.append(sugar_class.Sugar())
+                    sugar.add(sugar_list[-1])
+
 
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
@@ -112,6 +121,7 @@ def main():
 
         # Draw all sprites group to the screen
         holes.draw(screen)
+        sugar.draw(screen)
         ants.draw(screen)
         # Update all sprites
         all_sprites.update()
