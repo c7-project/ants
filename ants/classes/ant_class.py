@@ -5,7 +5,7 @@ import math
 import misc
 
 ants_underground = 30  # Number of ants currently underground
-food_coordinates = []
+
 
 class Ant(pygame.sprite.Sprite):
     """
@@ -25,11 +25,6 @@ class Ant(pygame.sprite.Sprite):
         else:
             self.rect.x = randint(1, 879)
             self.rect.y = randint(1, 579)
-        if self.found_food == True:
-            x, y = self.rect.x, self.rect.y
-            food_coordinates.append([x, y])
-
-
         self.stop_count = 0
         self.random_rotate = True
         self.head_start = 20
