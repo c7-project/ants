@@ -74,7 +74,14 @@ def main():
                 "Press 'W' to add a hole at the mouse's location",
                 18, (0, 0))
 
-        ant_list = misc.move_ants(ant_list)  # by Jim
+        ant_list = misc.move_ants(ant_list)
+
+        for hole in hole_list:
+            for ant in ant_list:
+                if pygame.sprite.collide_rect(ant, hole) and ant.head_start == 0:
+                    ant.kill()
+                    ant_list.remove(ant)
+                    ant_class.ants_underground =+ 1
 
         # Draw all sprites group to the screen
         holes.draw(screen)
