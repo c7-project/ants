@@ -37,4 +37,4 @@ To install Pycharm, continue to run these commands:
 
 - Background image: [fabooguy.deviantart.com](http://fabooguy.deviantart.com/art/Dirt-Ground-Texture-Tileable-2048x2048-441212191)
 - Background sounds: [1](https://www.youtube.com/watch?v=gRy3ieiCTRU), [2](https://www.youtube.com/watch?v=CrBD-XpHm1o), [3](https://www.youtube.com/watch?v=nMHhr_-to4I)
-- Sprites stocks: [1] (http://www.rocasa.es/), [2](http://ggyma.geo.ucm.es/docencia/MasterGeoBio/), [3](http://lascosasdejuampa1.blogspot.com/)
+- Sprites stock images: [1] (http://www.rocasa.es/), [2](http://ggyma.geo.ucm.es/docencia/MasterGeoBio/), [3](http://lascosasdejuampa1.blogspot.com/)
