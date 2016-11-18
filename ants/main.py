@@ -7,8 +7,7 @@ from classes import sugar_class  # Sugar
 from classes import misc  # Other methods
 from classes import video  # Video
 from classes import logger  # Print to command line
-
-
+from classes import rock_class
 def main():
     """
     Main game code
@@ -43,6 +42,9 @@ def main():
     initial_sugar = 0
     sugar_list = [sugar_class.Sugar() for i in range(initial_sugar)]
     logger.log("Generated {} sugar".format(str(initial_sugar)), important=True)
+    initial_rocks = 0
+    rocks_list = [rock_class.Rock() for i in range (initial_rocks)]
+    logger.log("Generated {} rock".format(str(initial_rocks)), important = True)
 
     # Create groups for objects
     ants = pygame.sprite.Group()
@@ -87,6 +89,9 @@ def main():
                 elif event.key == pygame.K_s:  # If 's' is pressed
                     sugar_list.append(sugar_class.Sugar())
                     sugar.add(sugar_list[-1])
+                elif event.key == pygame.K_r: #If 'r' is pressed
+                    rocks_list.append(rock_class.Rock())
+                    rocks.add(rocks_list[-1])
 
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
@@ -121,6 +126,7 @@ def main():
         holes.draw(screen)
         sugar.draw(screen)
         ants.draw(screen)
+        rocks.draw(screen)
         # Update all sprites
         all_sprites.update()
 
