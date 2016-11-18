@@ -5,12 +5,13 @@ import math
 import misc
 
 ants_underground = 30  # Number of ants currently underground
-
+food_coordinates = []
 
 class Ant(pygame.sprite.Sprite):
     """
     Ants and their many mysterious methods
     """
+
     def __init__(self, from_hole=True):
         pygame.sprite.Sprite.__init__(self)
         self.initial_image = pygame.image.load(
@@ -18,11 +19,17 @@ class Ant(pygame.sprite.Sprite):
         self.direction = randint(0, 359)
         self.image = self.initial_image
         self.rect = self.image.get_rect()
+        self.found_food = False
         if from_hole:
             self.rect.x, self.rect.y = misc.ant_from_hole()
         else:
             self.rect.x = randint(1, 879)
             self.rect.y = randint(1, 579)
+        if self.found_food == True:
+            x, y = self.rect.x, self.rect.y
+            food_coordinates.append([x, y])
+
+
         self.stop_count = 0
         self.random_rotate = True
         self.head_start = 20
