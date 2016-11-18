@@ -3,8 +3,9 @@ import pygame
 
 from classes import ant_class  # Ant
 from classes import hole_class  # Hole
-from classes import misc  # Methods
+from classes import misc  # Other methods
 from classes import video  # Video
+from classes import logger  # Print to command line
 
 
 def main():
@@ -14,48 +15,65 @@ def main():
     Contains pygame setup and the main game loop
     """
     pygame.init()  # Initialise pygame
+    logger.log("Init done", important=True)
     # Set window title
     screen = pygame.display.set_mode((900, 600))  # Set window size
+    logger.log("Set title", important=True)
 
     misc.display_text(screen, "loading...", 28, (20, 20))
     pygame.display.update()  # Update to loading screen
+    logger.log("Loading screen", important=True)
 
     pygame.display.set_caption(
         "Ants: An Artificial Intelligence Experiment by C7")
+    logger.log("Set title", important=True)
     done = False  # The game loop is broken when done becomes True
 
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
+    logger.log("Loaded background image", important=True)
 
-    hole_list = [hole_class.Hole() for i in range(7)]  # Generate holes
-    ant_list = [ant_class.Ant() for i in range(0)]  # Generate initial ants
+    initial_holes = 7
+    hole_list = [hole_class.Hole() for i in range(initial_holes)]  # Generate holes
+    logger.log("Generated {} holes".format(str(initial_holes)), important=True)
+    initial_ants = 0
+    ant_list = [ant_class.Ant() for i in range(initial_ants)]  # Generate initial ants
+    logger.log("Generated {} ants".format(str(initial_ants)), important=True)
 
     # Create groups for objects
     ants = pygame.sprite.Group()
     holes = pygame.sprite.Group()
     rocks = pygame.sprite.Group()
     food = pygame.sprite.Group()
+    logger.log("Set up sprite groups", important=True)
 
     # Add ants_list objects to ants list
     for individual_ant in ant_list:
         ants.add(individual_ant)
+    logger.log("Added ant_list contents to ants pygame.sprite.Group", important=True)
 
     for individual_hole in hole_list:
         holes.add(individual_hole)
+    logger.log("Added hole_list contents to holes pygame.sprite.Group", important=True)
 
     # List of all sprites
     all_sprites = pygame.sprite.Group()
+    logger.log("Created all_sprites group", important=True)
     # Add sprite groups to main group
     all_sprites.add(ants, holes, rocks, food)
+    logger.log("Added Groups to all_sprites Group", important=True)
     # pygame clock
     clock = pygame.time.Clock()
+    logger.log("Initialised clock", important=True)
 
     while not done:  # Main game loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # If close button
+                logger.log("Quitting (QUIT event)", important=True)
                 done = True  # Exit
             if event.type == pygame.KEYDOWN:  # If key pressed
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
+                    logger.log("Quitting (ESC key)", important=True)
                     done = True  # Exit
 
         clock.tick(30)  # Frame-rate
@@ -71,13 +89,14 @@ def main():
         else:  # No holes exist
             misc.display_text(
                 screen,
-                "Press 'W' to add a hole at the mouse's location",
+                "Hit 'H' to add a hole at the mouse's location",
                 18, (0, 0))
 
         ant_list = misc.move_ants(ant_list)
 
         for hole in hole_list:
-            hole_centre = pygame.draw.rect(screen, (0, 0, 0), (hole.rect.x + 30, hole.rect.y + 30, 1, 1), 1)
+            hole_centre = pygame.draw.rect(screen, (0, 0, 0), (
+                hole.rect.x + 30, hole.rect.y + 30, 1, 1), 1)
             for ant in ant_list:
                 if ant.rect.colliderect(hole_centre) and ant.head_start == 0:
                     ant.kill()

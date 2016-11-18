@@ -1,5 +1,5 @@
 import pygame
-from random import randint, choice # random function
+from random import randint, choice
 import hole_class  # Used in ant_from_hole
 
 
