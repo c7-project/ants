@@ -121,7 +121,7 @@ def main():
 
         for sugar in sugar_list:
             sugar_centre = pygame.draw.rect(screen, (0, 0, 0), (
-                sugar.rect.x + 114, sugar.rect.y + 114, 1, 1), 1)
+                sugar.rect.x + 57, sugar.rect.y + 57, 1, 1), 1)
             for ant in ant_list:
                 if ant.rect.colliderect(sugar_centre):
                     logger.log("Feeding ant{}".format(str(sugar)))

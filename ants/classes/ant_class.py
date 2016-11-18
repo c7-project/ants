@@ -29,6 +29,7 @@ class Ant(pygame.sprite.Sprite):
             x, y = self.rect.x, self.rect.y
             food_coordinates.append([x, y])
 
+
         self.stop_count = 0
         self.random_rotate = True
         self.head_start = 20
