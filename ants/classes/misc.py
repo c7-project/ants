@@ -18,6 +18,7 @@ def display_text(screen, text, size, location):
     # Display text
     screen.blit(label, location)
 
+
 # random direct generator for ants
 def get_random_ish_direction(max_degrees=10):
     """

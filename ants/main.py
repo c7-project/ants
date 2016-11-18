@@ -4,7 +4,7 @@ import pygame
 from classes import ant_class  # Ant
 from classes import hole_class  # Hole
 from classes import misc  # Methods
-from classes import video #Video 
+from classes import video  # Video
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
 
-    hole_list = [hole_class.Hole() for i in range(5)]  # Generate holes
+    hole_list = [hole_class.Hole() for i in range(7)]  # Generate holes
     ant_list = [ant_class.Ant() for i in range(0)]  # Generate initial ants
 
     # Create groups for objects
@@ -63,7 +63,7 @@ def main():
         screen.blit(bg, (0, 0))
 
         if hole_list:  # Means 'if there are hole(s)'
-            if ant_class.ants_underground > 0 and randint(0, 14) == 0:
+            if ant_class.ants_underground > 0 and randint(0, 10) == 0:
                 # Spawn new ant
                 ant_list.append(ant_class.Ant())  # Add to ant list
                 ants.add(ant_list[-1])  # Add it to ants sprite group
@@ -77,8 +77,9 @@ def main():
         ant_list = misc.move_ants(ant_list)
 
         for hole in hole_list:
+            hole_centre = pygame.draw.rect(screen, (0, 0, 0), (hole.rect.x + 30, hole.rect.y + 30, 1, 1), 1)
             for ant in ant_list:
-                if pygame.sprite.collide_rect(ant, hole) and ant.head_start == 0:
+                if ant.rect.colliderect(hole_centre) and ant.head_start == 0:
                     ant.kill()
                     ant_list.remove(ant)
                     ant_class.ants_underground =+ 1
