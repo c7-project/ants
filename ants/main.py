@@ -42,8 +42,7 @@ def main():
     logger.log("Generated {} ants".format(str(initial_ants)), important=True)
     initial_sugar = 0
     sugar_list = [sugar_class.Sugar() for i in range(initial_sugar)]
-    logger.log("Generated {} sugar".format(str(initial_sugar)),important=True)
-
+    logger.log("Generated {} sugar".format(str(initial_sugar)), important=True)
 
     # Create groups for objects
     ants = pygame.sprite.Group()
@@ -85,10 +84,9 @@ def main():
                 elif event.key == pygame.K_h:  # If 'h' is pressed
                     hole_list.append(hole_class.Hole(at_mouse=True))
                     holes.add(hole_list[-1])
-                elif event.key == pygame.K_s: # If 's' is pressed
+                elif event.key == pygame.K_s:  # If 's' is pressed
                     sugar_list.append(sugar_class.Sugar())
                     sugar.add(sugar_list[-1])
-
 
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
