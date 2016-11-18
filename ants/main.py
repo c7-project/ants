@@ -33,11 +33,11 @@ def main():
     bg = pygame.image.load("images/bg01a.jpg")
     logger.log("Loaded background image", important=True)
 
-    initial_holes = 7
-    hole_list = [hole_class.Hole() for i in range(initial_holes)]  # Generate holes
+    initial_holes = 7  # Number to be initially generated
+    hole_list = [hole_class.Hole() for i in range(initial_holes)]
     logger.log("Generated {} holes".format(str(initial_holes)), important=True)
     initial_ants = 0
-    ant_list = [ant_class.Ant() for i in range(initial_ants)]  # Generate initial ants
+    ant_list = [ant_class.Ant() for i in range(initial_ants)]
     logger.log("Generated {} ants".format(str(initial_ants)), important=True)
 
     # Create groups for objects
@@ -50,11 +50,13 @@ def main():
     # Add ants_list objects to ants list
     for individual_ant in ant_list:
         ants.add(individual_ant)
-    logger.log("Added ant_list contents to ants pygame.sprite.Group", important=True)
+    logger.log("Added ant_list contents to ants pygame.sprite.Group",
+               important=True)
 
     for individual_hole in hole_list:
         holes.add(individual_hole)
-    logger.log("Added hole_list contents to holes pygame.sprite.Group", important=True)
+    logger.log("Added hole_list contents to holes pygame.sprite.Group",
+               important=True)
 
     # List of all sprites
     all_sprites = pygame.sprite.Group()
@@ -75,7 +77,7 @@ def main():
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
                     logger.log("Quitting (ESC key)", important=True)
                     done = True  # Exit\
-                elif event.key == pygame.K_h: # If 'h' is pressed
+                elif event.key == pygame.K_h:  # If 'h' is pressed
                     hole_list.append(hole_class.Hole(at_mouse=True))
                     holes.add(hole_list[-1])
 
@@ -122,5 +124,6 @@ def main():
 
         # Save frame if video.video_mode
         video.save_screen(screen)
+
 
 main()

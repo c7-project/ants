@@ -1,4 +1,4 @@
-verbose = True
+verbose = False
 
 
 def log(text, important=False):
