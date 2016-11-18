@@ -99,9 +99,11 @@ def main():
                 hole.rect.x + 30, hole.rect.y + 30, 1, 1), 1)
             for ant in ant_list:
                 if ant.rect.colliderect(hole_centre) and ant.head_start == 0:
+                    logger.log("Killing ant {}".format(str(ant)))
                     ant.kill()
                     ant_list.remove(ant)
-                    ant_class.ants_underground =+ 1
+                    ant_class.ants_underground += 1
+                    logger.log("ants_underground incremented")
 
         # Draw all sprites group to the screen
         holes.draw(screen)
