@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+import misc
 
 # List of the [x, y] coordinates of existing holes
 hole_locations = []
@@ -9,13 +10,17 @@ class Hole(pygame.sprite.Sprite):
     """
     Holes: The ants portal to the underworld
     """
-    def __init__(self):
+    def __init__(self, at_mouse=False):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images/hole01a.png")
         self.rect = self.image.get_rect()
         if len(hole_locations) > 60:
             raise ValueError("Exceeded maximum number of holes: 60")
-        self.rect.x, self.rect.y = get_valid_hole_location()
+        if at_mouse:
+            pos = misc.get_mouse_loc()
+            self.rect.x, self.rect.y = pos[0] - 30, pos[1] - 30
+        else:
+            self.rect.x, self.rect.y = get_valid_hole_location()
 
 
 def get_valid_hole_location():

@@ -77,3 +77,8 @@ def check_colliding(s1, s2):
     :return: True if the ant is on the hole
     """
     return pygame.sprite.collide_rect(s1, s2)
+
+
+def get_mouse_loc():
+    pos = pygame.mouse.get_pos()
+    return pos[0], pos[1]

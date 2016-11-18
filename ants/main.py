@@ -74,7 +74,10 @@ def main():
             if event.type == pygame.KEYDOWN:  # If key pressed
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
                     logger.log("Quitting (ESC key)", important=True)
-                    done = True  # Exit
+                    done = True  # Exit\
+                elif event.key == pygame.K_h: # If 'h' is pressed
+                    hole_list.append(hole_class.Hole(at_mouse=True))
+                    holes.add(hole_list[-1])
 
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
