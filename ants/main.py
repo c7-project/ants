@@ -119,7 +119,16 @@ def main():
                     ant_class.ants_underground += 1
                     logger.log("ants_underground incremented")
 
-        # Draw all sprites group to the screen
+        for sugar in sugar_list:
+            sugar_centre = pygame.draw.rect(screen, (0, 0, 0), (
+                sugar.rect.x + 114, sugar.rect.y + 114, 1, 1), 1)
+            for ant in ant_list:
+                if ant.rect.colliderect(sugar_centre):
+                    logger.log("Feeding ant{}".format(str(sugar)))
+                    ant_class.found_food = True
+
+
+                    # Draw all sprites group to the screen
         holes.draw(screen)
         sugar.draw(screen)
         ants.draw(screen)
