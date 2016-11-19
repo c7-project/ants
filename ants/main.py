@@ -97,7 +97,6 @@ def main():
 
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
-        screen.blit(bg, (0, 0))
 
         if hole_list:  # Means 'if there are hole(s)'
             if ant_class.ants_underground > 0 and randint(0, 10) == 0:
@@ -131,6 +130,12 @@ def main():
                 if ant.rect.colliderect(sugar_centre) and ant.head_start == 0:
                     ant.stop_count += randint(50, 87)
                     ant.head_start += 20
+                    sugar.remaining_sugar -= 1
+                    sugar_exists = sugar.image_switch()
+                    if not sugar_exists:
+                        sugar_list.remove(sugar)
+
+        screen.blit(bg, (0, 0))
 
         # Draw all sprites group to the screen
         holes.draw(screen)

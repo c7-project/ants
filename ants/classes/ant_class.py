@@ -4,7 +4,7 @@ import math
 
 import misc
 
-ants_underground = 30  # Number of ants currently underground
+ants_underground = 200  # Number of ants currently underground
 
 
 class Ant(pygame.sprite.Sprite):
