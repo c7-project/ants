@@ -8,6 +8,8 @@ from classes import misc  # Other methods
 from classes import video  # Video
 from classes import logger  # Print to command line
 from classes import rock_class
+
+
 def main():
     """
     Main game code
@@ -50,7 +52,7 @@ def main():
     ants = pygame.sprite.Group()
     holes = pygame.sprite.Group()
     rocks = pygame.sprite.Group()
-    sugar = pygame.sprite.Group()
+    sugars = pygame.sprite.Group()
     logger.log("Set up sprite groups", important=True)
 
     # Add ants_list objects to ants list
@@ -68,7 +70,7 @@ def main():
     all_sprites = pygame.sprite.Group()
     logger.log("Created all_sprites group", important=True)
     # Add sprite groups to main group
-    all_sprites.add(ants, holes, rocks, sugar)
+    all_sprites.add(ants, holes, rocks, sugars)
     logger.log("Added Groups to all_sprites Group", important=True)
     # pygame clock
     clock = pygame.time.Clock()
@@ -88,8 +90,8 @@ def main():
                     holes.add(hole_list[-1])
                 elif event.key == pygame.K_s:  # If 's' is pressed
                     sugar_list.append(sugar_class.Sugar())
-                    sugar.add(sugar_list[-1])
-                elif event.key == pygame.K_r: #If 'r' is pressed
+                    sugars.add(sugar_list[-1])
+                elif event.key == pygame.K_r:  # If 'r' is pressed
                     rocks_list.append(rock_class.Rock())
                     rocks.add(rocks_list[-1])
 
@@ -122,9 +124,17 @@ def main():
                     ant_class.ants_underground += 1
                     logger.log("ants_underground incremented")
 
+        for sugar in sugar_list:
+            sugar_centre = pygame.draw.rect(screen, (255, 255, 255), (
+                sugar.rect.x + 42, sugar.rect.y + 42, 30, 30), 1)
+            for ant in ant_list:
+                if ant.rect.colliderect(sugar_centre) and ant.head_start == 0:
+                    ant.stop_count += randint(50, 87)
+                    ant.head_start += 20
+
         # Draw all sprites group to the screen
         holes.draw(screen)
-        sugar.draw(screen)
+        sugars.draw(screen)
         ants.draw(screen)
         rocks.draw(screen)
         # Update all sprites
