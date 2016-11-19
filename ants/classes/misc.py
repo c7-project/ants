@@ -52,20 +52,34 @@ def ant_from_hole():
     return x, y
 
 
-def move_ants(ant_list):
+def move_ants(ant_list, rock_list):
     new_list = []  # List to return
     for ant in ant_list:  # For each ant
-        if ant.stop_count > 0:  # If need to wait for stop
-            ant.stop_count -= 1
-        else:  # Rotate and/or move or neither
-            if randint(0, 2) == 0:  # Rotate
-                ant.rotate(get_random_ish_direction(24))
-            if randint(0, 7) > 0:  # Move
-                ant.move(3)
-            if randint(0, 180) == 0:  # Stop
-                ant.stop(randint(8, 22))
+        initial_ant = ant.rect.x, ant.rect.y, ant.direction
+        ant = move_ant(ant)
+        while pygame.sprite.spritecollide(ant, rock_list, False):
+            ant.rect.x, ant.rect.y, ant.direction = initial_ant
+            abs_angle_change = randint(60, 110)
+            if randint(0, 1) == 0:
+                ant.direction += abs_angle_change
+            else:
+                ant.direction -= abs_angle_change
+            ant = move_ant(ant)
         new_list.append(ant)  # Add to new list
     return new_list
+
+
+def move_ant(ant):
+    if ant.stop_count > 0:  # If need to wait for stop
+        ant.stop_count -= 1
+    else:  # Rotate and/or move or neither
+        if randint(0, 2) == 0:  # Rotate
+            ant.rotate(get_random_ish_direction(24))
+        if randint(0, 7) > 0:  # Move
+            ant.move(3)
+        if randint(0, 180) == 0:  # Stop
+            ant.stop(randint(8, 22))
+    return ant
 
 
 def get_mouse_loc():

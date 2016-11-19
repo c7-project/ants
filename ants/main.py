@@ -38,15 +38,9 @@ def main():
     initial_holes = 7  # Number to be initially generated
     hole_list = [hole_class.Hole() for i in range(initial_holes)]
     logger.log("Generated {} holes".format(str(initial_holes)), important=True)
-    initial_ants = 0
-    ant_list = [ant_class.Ant() for i in range(initial_ants)]
-    logger.log("Generated {} ants".format(str(initial_ants)), important=True)
-    initial_sugar = 0
-    sugar_list = [sugar_class.Sugar() for i in range(initial_sugar)]
-    logger.log("Generated {} sugar".format(str(initial_sugar)), important=True)
-    initial_rocks = 0
-    rocks_list = [rock_class.Rock() for i in range (initial_rocks)]
-    logger.log("Generated {} rock".format(str(initial_rocks)), important = True)
+    ant_list = []
+    sugar_list = []
+    rock_list = []
 
     # Create groups for objects
     ants = pygame.sprite.Group()
@@ -77,40 +71,25 @@ def main():
     logger.log("Initialised clock", important=True)
 
     while not done:  # Main game loop
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:  # If close button
-                logger.log("Quitting (QUIT event)", important=True)
-                done = True  # Exit
-            if event.type == pygame.KEYDOWN:  # If key pressed
-                if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
-                    logger.log("Quitting (ESC key)", important=True)
-                    done = True  # Exit\
-                elif event.key == pygame.K_h:  # If 'h' is pressed
-                    hole_list.append(hole_class.Hole(at_mouse=True))
-                    holes.add(hole_list[-1])
-                elif event.key == pygame.K_s:  # If 's' is pressed
-                    sugar_list.append(sugar_class.Sugar())
-                    sugars.add(sugar_list[-1])
-                elif event.key == pygame.K_r:  # If 'r' is pressed
-                    rocks_list.append(rock_class.Rock())
-                    rocks.add(rocks_list[-1])
-
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
 
         if hole_list:  # Means 'if there are hole(s)'
             if ant_class.ants_underground > 0 and randint(0, 10) == 0:
                 # Spawn new ant
-                ant_list.append(ant_class.Ant())  # Add to ant list
-                ants.add(ant_list[-1])  # Add it to ants sprite group
-                ant_class.ants_underground -= 1  # Decrement underground count
+                try:
+                    ant_list.append(ant_class.Ant(rock_list))  # Add to ant list
+                    ants.add(ant_list[-1])  # Add it to ants sprite group
+                    ant_class.ants_underground -= 1  # Decrement underground count
+                except ValueError as e:
+                    logger.log("Ant can't appear from hole - " + str(e))
         else:  # No holes exist
             misc.display_text(
                 screen,
                 "Hit 'H' to add a hole at the mouse's location",
                 18, (0, 0))
 
-        ant_list = misc.move_ants(ant_list)
+        ant_list = misc.move_ants(ant_list, rock_list)
 
         for hole in hole_list:
             hole_centre = pygame.draw.rect(screen, (0, 0, 0), (
@@ -137,11 +116,6 @@ def main():
 
         screen.blit(bg, (0, 0))
 
-        for ant in ant_list:
-            if pygame.sprite.spritecollide(ant, rocks_list, False) and ant.head_start == 0:
-                ant.move_to_previous(rotate_away=True)
-
-
         # Draw all sprites group to the screen
         holes.draw(screen)
         sugars.draw(screen)
@@ -158,6 +132,38 @@ def main():
 
         # Save frame if video.video_mode
         video.save_screen(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # If close button
+                logger.log("Quitting (QUIT event)", important=True)
+                done = True  # Exit
+
+            if event.type == pygame.KEYDOWN:  # If key pressed
+                if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
+                    logger.log("Quitting (ESC key)", important=True)
+                    done = True  # Exit
+
+                elif event.key == pygame.K_h:  # If 'h' is pressed
+                    logger.log("Adding a hole")
+                    hole_list.append(hole_class.Hole(at_mouse=True))
+                    holes.add(hole_list[-1])
+
+                elif event.key == pygame.K_s:  # If 's' is pressed
+                    logger.log("Adding sugar")
+                    sugar_list.append(sugar_class.Sugar())
+                    sugars.add(sugar_list[-1])
+
+                elif event.key == pygame.K_r:  # If 'r' is pressed
+                    logger.log("Adding a rock")
+                    try:
+                        rock_list.append(rock_class.Rock(ant_list))
+                        rocks.add(rock_list[-1])
+                    except ValueError:
+                        logger.log(
+                            "Rock not placed - ant collision detected.",
+                            important=True)
+
+    logger.log("~~~~~ THE END ~~~~~", important=True)
 
 
 main()

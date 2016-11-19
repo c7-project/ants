@@ -4,7 +4,7 @@ import math
 
 import misc
 
-ants_underground = 200  # Number of ants currently underground
+ants_underground = 65  # Number of ants currently underground
 
 
 class Ant(pygame.sprite.Sprite):
@@ -12,7 +12,7 @@ class Ant(pygame.sprite.Sprite):
     Ants and their many mysterious methods
     """
 
-    def __init__(self, from_hole=True):
+    def __init__(self, rock_list, from_hole=True):
         pygame.sprite.Sprite.__init__(self)
         self.initial_image = pygame.image.load(
             "images/ant01a.png")
@@ -29,6 +29,8 @@ class Ant(pygame.sprite.Sprite):
         self.stop_count = 0
         self.random_rotate = True
         self.head_start = 20
+        if pygame.sprite.spritecollide(self, rock_list, False):
+            raise ValueError("There's a rock in the way :(")
 
     def rotate(self, angle):
         """
@@ -151,12 +153,3 @@ class Ant(pygame.sprite.Sprite):
         :param iterations:
         """
         self.stop_count += iterations
-
-    def move_to_previous(self, rotate_away=False):
-        self.rect.x, self.rect.y =\
-            self.previous_location[0], self.previous_location[1]
-        angle = randint(100, 150)
-        if randint(0, 1):
-            self.direction += angle
-        else:
-            self.direction -= angle
