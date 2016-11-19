@@ -25,6 +25,7 @@ class Ant(pygame.sprite.Sprite):
         else:
             self.rect.x = randint(1, 879)
             self.rect.y = randint(1, 579)
+        self.previous_location = [self.rect.x, self.rect.y]
         self.stop_count = 0
         self.random_rotate = True
         self.head_start = 20
@@ -131,6 +132,7 @@ class Ant(pygame.sprite.Sprite):
         Moves forwards in the ant's current direction
         :param distance: How far the ant moves
         """
+        self.previous_location = [self.rect.x, self.rect.y]
         if self.head_start > 0:
             self.head_start -= 1
         self.detect_edge()
@@ -149,3 +151,12 @@ class Ant(pygame.sprite.Sprite):
         :param iterations:
         """
         self.stop_count += iterations
+
+    def move_to_previous(self, rotate_away=False):
+        self.rect.x, self.rect.y =\
+            self.previous_location[0], self.previous_location[1]
+        angle = randint(100, 150)
+        if randint(0, 1):
+            self.direction += angle
+        else:
+            self.direction -= angle

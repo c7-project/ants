@@ -137,11 +137,16 @@ def main():
 
         screen.blit(bg, (0, 0))
 
+        for ant in ant_list:
+            if pygame.sprite.spritecollide(ant, rocks_list, False) and ant.head_start == 0:
+                ant.move_to_previous(rotate_away=True)
+
+
         # Draw all sprites group to the screen
         holes.draw(screen)
         sugars.draw(screen)
-        ants.draw(screen)
         rocks.draw(screen)
+        ants.draw(screen)
         # Update all sprites
         all_sprites.update()
 
