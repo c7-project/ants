@@ -3,6 +3,7 @@ from math import atan, degrees
 import logger
 from time import sleep
 
+
 def smants_guidants(ant):
     dy = ant.rect.y - ant.return_loc[1]
     dx = ant.rect.x - ant.return_loc[0]
