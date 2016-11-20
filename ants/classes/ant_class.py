@@ -1,5 +1,5 @@
 import pygame
-from random import randint
+from random import randint, choice
 import math
 
 import misc
@@ -20,6 +20,7 @@ class Ant(pygame.sprite.Sprite):
         self.image = self.initial_image
         self.rect = self.image.get_rect()
         self.found_food = False
+        self.return_loc = []
         if from_hole:
             self.rect.x, self.rect.y = misc.ant_from_hole()
         else:
@@ -153,3 +154,7 @@ class Ant(pygame.sprite.Sprite):
         :param iterations:
         """
         self.stop_count += iterations
+
+    def set_return_hole(self, hole_list):
+        hole = choice(hole_list)
+        self.return_loc = [hole.rect.x + 30, hole.rect.y + 30]

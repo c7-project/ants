@@ -1,7 +1,7 @@
 import pygame
 from random import randint, choice
 import hole_class  # Used in ant_from_hole
-
+import horrible_maths
 
 def display_text(screen, text, size, location):
     """
@@ -79,6 +79,8 @@ def move_ant(ant):
             ant.move(3)
         if randint(0, 180) == 0:  # Stop
             ant.stop(randint(8, 22))
+        if ant.found_food:
+            horrible_maths.smants_guidants(ant)
     return ant
 
 

@@ -107,6 +107,8 @@ def main():
                 sugar.rect.x + 42, sugar.rect.y + 42, 30, 30), 1)
             for ant in ant_list:
                 if ant.rect.colliderect(sugar_centre) and ant.head_start == 0:
+                    ant.found_food = True
+                    ant.set_return_hole(hole_list)
                     ant.stop_count += randint(50, 87)
                     ant.head_start += 20
                     sugar.remaining_sugar -= 1

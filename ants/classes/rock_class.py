@@ -7,7 +7,7 @@ class Rock(pygame.sprite.Sprite):
     def __init__(self, ant_list):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(
-            "images/rocks/rock_{}.png".format(
+            "images/rocks/Rock_{}.png".format(
                 str(randint(1, 3)))).convert_alpha()
         self.rect = self.image.get_rect()
         pos = misc.get_mouse_loc()
