@@ -35,7 +35,7 @@ def main():
     bg = pygame.image.load("images/bg01a.jpg")
     logger.log("Loaded background image", important=True)
 
-    initial_holes = 7  # Number to be initially generated
+    initial_holes = 1  # Number to be initially generated
     hole_list = [hole_class.Hole() for i in range(initial_holes)]
     logger.log("Generated {} holes".format(str(initial_holes)), important=True)
     ant_list = []

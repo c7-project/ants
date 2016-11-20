@@ -1,18 +1,22 @@
 from __future__ import division
-from math import atan, degrees
+from math import atan, atan2, degrees
 import logger
-from time import sleep
+
+
+def get_angle(x, y, center_x, center_y):
+    angle = degrees(atan2(y - center_y, x - center_x))
+    angle *= -1
+    angle += 90 + 360
+    angle %= 360
+    return angle
 
 
 def smants_guidants(ant):
-    dy = ant.rect.y - ant.return_loc[1]
-    dx = ant.rect.x - ant.return_loc[0]
-    if dx == 0:
-        dy_by_dx = 9999999
-    else:
-        dy_by_dx = dy/dx
-    radian_change = atan(dy_by_dx)
-    degree_change = degrees(radian_change)
-    logger.log(str(degree_change), important=True)
-    if degree_change > 120:
-        sleep(1)
+    angle = get_angle(ant.rect.x, ant.rect.y, ant.return_loc[0], ant.return_loc[1])
+    logger.log("hole:{},{} , ant:{},{} , angle:{}".format(
+        str(ant.return_loc[0]),
+        str(ant.return_loc[1]),
+        str(ant.rect.x),
+        str(ant.rect.y),
+        angle), important=True)
+    ant.direction = angle

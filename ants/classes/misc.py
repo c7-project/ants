@@ -91,6 +91,7 @@ def get_mouse_loc():
     pos = pygame.mouse.get_pos()
     return pos[0], pos[1]
 
+
 def ant_sugar_collision(sugar_list, ant_list, hole_list, screen):
     for sugar in sugar_list:
         sugar_centre = pygame.draw.rect(screen, (255, 255, 255), (
@@ -106,6 +107,7 @@ def ant_sugar_collision(sugar_list, ant_list, hole_list, screen):
                 if not sugar_exists:
                     sugar_list.remove(sugar)
     return sugar_list, ant_list
+
 
 def generate_new_ant(hole_list, ant_list, rock_list, ants, screen):
     if hole_list:  # Means 'if there are hole(s)'
