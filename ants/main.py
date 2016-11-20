@@ -74,20 +74,7 @@ def main():
         clock.tick(30)  # Frame-rate
         # Add background image, overlaying everything
 
-        if hole_list:  # Means 'if there are hole(s)'
-            if ant_class.ants_underground > 0 and randint(0, 10) == 0:
-                # Spawn new ant
-                try:
-                    ant_list.append(ant_class.Ant(rock_list))  # Add to ant list
-                    ants.add(ant_list[-1])  # Add it to ants sprite group
-                    ant_class.ants_underground -= 1  # Decrement underground count
-                except ValueError as e:
-                    logger.log("Ant can't appear from hole - " + str(e))
-        else:  # No holes exist
-            misc.display_text(
-                screen,
-                "Hit 'H' to add a hole at the mouse's location",
-                18, (0, 0))
+        ant_list, ants = misc.generate_new_ant(hole_list, ant_list, rock_list, ants, screen)
 
         ant_list = misc.move_ants(ant_list, rock_list)
 
@@ -102,20 +89,7 @@ def main():
                     ant_class.ants_underground += 1
                     logger.log("ants_underground incremented")
 
-        for sugar in sugar_list:
-            sugar_centre = pygame.draw.rect(screen, (255, 255, 255), (
-                sugar.rect.x + 42, sugar.rect.y + 42, 30, 30), 1)
-            for ant in ant_list:
-                if ant.rect.colliderect(sugar_centre) and ant.head_start == 0:
-                    ant.found_food = True
-                    ant.set_return_hole(hole_list)
-                    ant.stop_count += randint(50, 87)
-                    ant.head_start += 20
-                    sugar.remaining_sugar -= 1
-                    sugar_exists = sugar.image_switch()
-                    if not sugar_exists:
-                        sugar_list.remove(sugar)
-
+        sugar_list, ant_list = misc.ant_sugar_collision(sugar_list, ant_list, hole_list, screen)
         screen.blit(bg, (0, 0))
 
         # Draw all sprites group to the screen

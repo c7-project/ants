@@ -2,6 +2,9 @@ import pygame
 from random import randint, choice
 import hole_class  # Used in ant_from_hole
 import horrible_maths
+import ant_class
+import logger
+
 
 def display_text(screen, text, size, location):
     """
@@ -87,3 +90,36 @@ def move_ant(ant):
 def get_mouse_loc():
     pos = pygame.mouse.get_pos()
     return pos[0], pos[1]
+
+def ant_sugar_collision(sugar_list, ant_list, hole_list, screen):
+    for sugar in sugar_list:
+        sugar_centre = pygame.draw.rect(screen, (255, 255, 255), (
+            sugar.rect.x + 42, sugar.rect.y + 42, 30, 30), 1)
+        for ant in ant_list:
+            if ant.rect.colliderect(sugar_centre) and ant.head_start == 0:
+                ant.found_food = True
+                ant.set_return_hole(hole_list)
+                ant.stop_count += randint(50, 87)
+                ant.head_start += 20
+                sugar.remaining_sugar -= 1
+                sugar_exists = sugar.image_switch()
+                if not sugar_exists:
+                    sugar_list.remove(sugar)
+    return sugar_list, ant_list
+
+def generate_new_ant(hole_list, ant_list, rock_list, ants, screen):
+    if hole_list:  # Means 'if there are hole(s)'
+        if ant_class.ants_underground > 0 and randint(0, 10) == 0:
+            # Spawn new ant
+            try:
+                ant_list.append(ant_class.Ant(rock_list))  # Add to ant list
+                ants.add(ant_list[-1])  # Add it to ants sprite group
+                ant_class.ants_underground -= 1  # Decrement underground count
+            except ValueError as e:
+                logger.log("Ant can't appear from hole - " + str(e))
+    else:  # No holes exist
+        display_text(
+            screen,
+            "Hit 'H' to add a hole at the mouse's location",
+            18, (0, 0))
+    return ant_list, ants
