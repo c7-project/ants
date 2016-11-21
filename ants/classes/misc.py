@@ -119,6 +119,8 @@ def generate_new_ant(hole_list, ant_list, rock_list, ants, screen):
                 ant_class.ants_underground -= 1  # Decrement underground count
             except ValueError as e:
                 logger.log("Ant can't appear from hole - " + str(e))
+            except IndexError:
+                logger.log("No holes exist", important=True)
     else:  # No holes exist
         display_text(
             screen,

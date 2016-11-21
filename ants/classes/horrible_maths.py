@@ -1,5 +1,5 @@
 from __future__ import division
-from math import atan, atan2, degrees
+from math import atan2, degrees
 import logger
 
 
@@ -18,5 +18,5 @@ def smants_guidants(ant):
         str(ant.return_loc[1]),
         str(ant.rect.x),
         str(ant.rect.y),
-        angle), important=True)
+        angle))
     ant.direction = angle

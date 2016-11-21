@@ -22,7 +22,8 @@ class Ant(pygame.sprite.Sprite):
         self.found_food = False
         self.return_loc = []
         if from_hole:
-            self.rect.x, self.rect.y = misc.ant_from_hole()
+            x_and_y = misc.ant_from_hole()
+            self.rect.x, self.rect.y = x_and_y
         else:
             self.rect.x = randint(1, 879)
             self.rect.y = randint(1, 579)

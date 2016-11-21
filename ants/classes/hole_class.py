@@ -21,6 +21,8 @@ class Hole(pygame.sprite.Sprite):
             self.rect.x, self.rect.y = pos[0] - 30, pos[1] - 30
         else:
             self.rect.x, self.rect.y = get_valid_hole_location()
+        global hole_locations
+        hole_locations.append([self.rect.x, self.rect.y])  # Add new coordinates to list
 
 
 def get_valid_hole_location():
@@ -29,7 +31,6 @@ def get_valid_hole_location():
     :return: The valid x and y coordinates
     """
     valid_location = False  # First assume the location is not valid
-    global hole_locations
     x = 0
     y = 0
 
@@ -48,6 +49,4 @@ def get_valid_hole_location():
         # If coordinates are valid for every existing hole
         if valid_count == len(hole_locations):
             valid_location = True
-
-    hole_locations.append([x, y])  # Add new coordinates to list
     return x, y  # Return coordinates x and y
