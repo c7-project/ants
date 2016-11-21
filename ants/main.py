@@ -1,13 +1,12 @@
-from random import randint
 import pygame
 
 from classes import ant_class  # Ant
 from classes import hole_class  # Hole
 from classes import sugar_class  # Sugar
+from classes import rock_class  # Rock
 from classes import misc  # Other methods
 from classes import video  # Video
 from classes import logger  # Print to command line
-from classes import rock_class
 
 
 def main():
@@ -35,7 +34,9 @@ def main():
     bg = pygame.image.load("images/bg01a.jpg")
     logger.log("Loaded background image", important=True)
 
-    initial_holes = 3  # Number to be initially generated
+    initial_holes = 1  # Number to be initially generated
+    if initial_holes > 60:
+        raise ValueError("Exceeded maximum number of random holes: 60")
     hole_list = [hole_class.Hole() for i in range(initial_holes)]
     logger.log("Generated {} holes".format(str(initial_holes)), important=True)
     ant_list = []

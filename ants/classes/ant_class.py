@@ -14,10 +14,11 @@ class Ant(pygame.sprite.Sprite):
 
     def __init__(self, rock_list, from_hole=True):
         pygame.sprite.Sprite.__init__(self)
-        self.initial_image = pygame.image.load(
-            "images/ant01a.png")
+        self.image_list = misc.load_ant_image_list()
+        self.image = self.image_list[0]
+        self.image_iteration = 0
+        self.image_index = 0
         self.direction = randint(0, 359)
-        self.image = self.initial_image
         self.rect = self.image.get_rect()
         self.found_food = False
         self.return_loc = []
@@ -44,7 +45,8 @@ class Ant(pygame.sprite.Sprite):
         :param angle: The angle (degrees) to rotate the ant
         """
         self.direction += angle
-        self.image = misc.rotate_center(self.initial_image, self.direction)
+        self.image = misc.rotate_center(
+            self.image_list[self.image_index], self.direction)
 
     def resolve_direction(self):
         """
@@ -155,7 +157,14 @@ class Ant(pygame.sprite.Sprite):
         :param iterations:
         """
         self.stop_count += iterations
+        self.image_iteration = 0
+        self.rotate(0)
 
     def set_return_hole(self, hole_list):
         hole = choice(hole_list)
         self.return_loc = [hole.rect.x + 30, hole.rect.y + 30]
+
+    def movement_variant(self):
+        self.image_iteration += 1
+        self.image_iteration %= 16
+        self.image_index = self.image_iteration // 4

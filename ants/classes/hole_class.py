@@ -14,8 +14,6 @@ class Hole(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images/hole01a.png")
         self.rect = self.image.get_rect()
-        if len(hole_locations) > 60:
-            raise ValueError("Exceeded maximum number of holes: 60")
         if at_mouse:
             pos = misc.get_mouse_loc()
             self.rect.x, self.rect.y = pos[0] - 30, pos[1] - 30

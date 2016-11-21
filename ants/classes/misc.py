@@ -1,7 +1,7 @@
 import pygame
 from random import randint, choice
+from math import atan2, degrees
 import hole_class  # Used in ant_from_hole
-import horrible_maths
 import ant_class
 import logger
 
@@ -76,14 +76,15 @@ def move_ant(ant):
     if ant.stop_count > 0:  # If need to wait for stop
         ant.stop_count -= 1
     else:  # Rotate and/or move or neither
-        if randint(0, 2) == 0:  # Rotate
-            ant.rotate(get_random_ish_direction(24))
-        if randint(0, 7) > 0:  # Move
-            ant.move(3)
+        if ant.found_food:
+            face_return_loc(ant)
+        if randint(0, 20) > 0:  # Move
+            ant.move(randint(1, 3))
+        if randint(0, 4) > 0:  # Rotate
+            ant.rotate(get_random_ish_direction(8))
         if randint(0, 180) == 0:  # Stop
             ant.stop(randint(8, 22))
-        if ant.found_food:
-            horrible_maths.smants_guidants(ant)
+    ant.movement_variant()
     return ant
 
 
@@ -127,3 +128,40 @@ def generate_new_ant(hole_list, ant_list, rock_list, ants, screen):
             "Hit 'H' to add a hole at the mouse's location",
             18, (0, 0))
     return ant_list, ants
+
+
+def load_ant_image_list():
+    image_list = []
+    for i in range(4):
+        image_list.append(pygame.image.load(
+            "images/moving_ant-v1/a{}.png".format(
+                str(i+1).zfill(1))))
+    return image_list
+
+
+def get_angle(x, y, center_x, center_y):
+    angle = degrees(atan2(y - center_y, x - center_x))
+    angle *= -1
+    angle += 90 + 360
+    angle %= 360
+    return angle
+
+
+def face_return_loc(ant):
+    """"
+    Sets the ant's direction to face its return location
+
+    Formerly 'smants_guidants'
+    """
+    angle = get_angle(
+        ant.rect.x + 12,
+        ant.rect.y + 12,
+        ant.return_loc[0],
+        ant.return_loc[1])
+    logger.log("hole:{},{} , ant:{},{} , angle:{}".format(
+        str(ant.return_loc[0]),
+        str(ant.return_loc[1]),
+        str(ant.rect.x),
+        str(ant.rect.y),
+        angle))
+    ant.direction = angle
