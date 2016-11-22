@@ -3,6 +3,7 @@ from random import randint, choice
 from math import atan2, degrees
 import hole_class  # Used in ant_from_hole
 import ant_class
+import pixel_perfect
 import logger
 
 
@@ -60,14 +61,26 @@ def move_ants(ant_list, rock_list):
     for ant in ant_list:  # For each ant
         initial_ant = ant.rect.x, ant.rect.y, ant.direction
         ant = move_ant(ant)
-        while pygame.sprite.spritecollide(ant, rock_list, False):
-            ant.rect.x, ant.rect.y, ant.direction = initial_ant
-            abs_angle_change = randint(60, 110)
-            if randint(0, 1) == 0:
-                ant.direction += abs_angle_change
-            else:
-                ant.direction -= abs_angle_change
-            ant = move_ant(ant)
+        for rock in rock_list:
+            attempts = 0
+            give_up = False
+            while pygame.sprite.spritecollide(
+                    ant, rock_list, False
+            ) and pixel_perfect.check_collision(ant, rock) and not give_up:
+                attempts += 1
+                if attempts > 40:
+                    ant.direction += randint(0, 359)
+                    ant.move(randint(3, 7))
+                    if attempts > 100:
+                        give_up = True
+                else:
+                    ant.rect.x, ant.rect.y, ant.direction = initial_ant
+                    abs_angle_change = randint(20, 100)
+                    if randint(0, 1) == 0:
+                        ant.direction += abs_angle_change
+                    else:
+                        ant.direction -= abs_angle_change
+                    ant = move_ant(ant)
         new_list.append(ant)  # Add to new list
     return new_list
 
@@ -171,9 +184,12 @@ def face_return_loc(ant):
 def user_add_ants(ant_list, ants, rock_list):
     if pygame.key.get_pressed()[pygame.K_a]:
         if ant_class.ants_underground > 0:
-            ant_list.append(ant_class.Ant(rock_list))
-            ants.add(ant_list[-1])  # Add it to ants sprite group
-            ant_class.ants_underground -= 1  # Decrement underground count
+            try:
+                ant_list.append(ant_class.Ant(rock_list))
+                ants.add(ant_list[-1])  # Add it to ants sprite group
+                ant_class.ants_underground -= 1  # Decrement underground count
+            except ValueError as e:
+                logger.log("Ant can't appear from hole - " + str(e))
     if pygame.key.get_pressed()[pygame.K_u]:
         ant_class.ants_underground += 1
     return ant_list, ants, rock_list

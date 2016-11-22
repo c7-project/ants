@@ -1,6 +1,7 @@
 import pygame
 from random import randint, choice
 import math
+import pixel_perfect
 
 import misc
 
@@ -28,6 +29,7 @@ class Ant(pygame.sprite.Sprite):
         else:
             self.rect.x = randint(1, 879)
             self.rect.y = randint(1, 579)
+        self.hitmask = pixel_perfect.get_alpha_hitmask(self.image, self.rect)
         self.previous_location = [self.rect.x, self.rect.y]
         self.stop_count = 0
         self.random_rotate = True
