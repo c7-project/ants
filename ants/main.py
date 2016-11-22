@@ -101,8 +101,13 @@ def main():
         # Update all sprites
         all_sprites.update()
 
-        fps_value = video.get_fps(clock).zfill(2)  # Get fps value
-        misc.display_text(screen, "fps:" + fps_value, 14, (855, 0))
+        fps_value = video.get_fps(clock)  # Get fps value
+        misc.display_text(screen, "fps: " + fps_value, 14, (850, 0))
+        undergrounds_ants = ant_class.ants_underground
+        misc.display_text(screen, "Ants above ground: " + str(len(ant_list)), 14, (745, 10))
+        misc.display_text(screen, "Underground Ants: " + str(undergrounds_ants), 14, (752, 20))
+        misc.display_text(screen, "Number of holes: " + str(len(hole_class.hole_locations)), 14, (760, 30))
+        # misc.display_text(screen, "Number of rocks:" + )
 
         # Update display to show changes made in current iteration
         pygame.display.update()
