@@ -44,6 +44,9 @@ def get_random_ish_direction(max_degrees=10):
 
 
 def scoreboard(screen, clock, ant_list):
+    """
+    Displays the scoreboard on the screen
+    """
     fps_value = video.get_fps(clock)  # Get fps value
     display_text(screen, "fps: " + fps_value, 14, (843, 0))
     display_text(screen, "Ants above ground: " + str(len(ant_list)), 14, (745, 10))

@@ -102,6 +102,7 @@ def main():
         # Update all sprites
         all_sprites.update()
 
+        # Shows the scoreboard
         misc.scoreboard(screen, clock, ant_list)
 
         # Update display to show changes made in current iteration
