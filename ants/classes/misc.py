@@ -4,6 +4,8 @@ from math import atan2, degrees
 import hole_class  # Used in ant_from_hole
 import ant_class
 import sugar_class
+import rock_class
+import video
 import pixel_perfect
 import logger
 
@@ -39,6 +41,17 @@ def get_random_ish_direction(max_degrees=10):
     :return: Random number between -max_degrees and +max_degrees
     """
     return randint(-max_degrees, max_degrees)
+
+
+def scoreboard(screen, clock, ant_list):
+    fps_value = video.get_fps(clock)  # Get fps value
+    display_text(screen, "fps: " + fps_value, 14, (843, 0))
+    display_text(screen, "Ants above ground: " + str(len(ant_list)), 14, (745, 10))
+    display_text(screen, "Underground Ants: " + str(ant_class.ants_underground), 14, (752, 20))
+    display_text(screen, "Number of holes: " + str(len(hole_class.hole_locations)), 14, (760, 30))
+    display_text(screen, "Active sugar: " + str(sugar_class.active_sugar), 14, (781, 40))
+    display_text(screen, "Eaten sugar: " + str(sugar_class.eaten_sugar), 14, (788, 50))
+    display_text(screen, "Rocks: " + str(rock_class.number_of_rocks), 14, (830, 60))
 
 
 def rotate_center(image, angle):
