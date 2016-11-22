@@ -7,7 +7,7 @@ import pixel_perfect
 import logger
 
 
-def display_text(screen, text, size, location):
+def display_text(screen, text, size, location, bold=False, italic=False):
     """
     Display a string on the screen
     :param screen: The pygame.display screen object
@@ -16,9 +16,14 @@ def display_text(screen, text, size, location):
     :param location: Location on screen
     """
     # Create font
-    my_font = pygame.font.SysFont("monospace", size)
+    if bold:
+        font = pygame.font.Font("fonts/Lekton-Bold.ttf", size)
+    elif italic:
+        font = pygame.font.Font("fonts/Lekton-Italic.ttf", size)
+    else:
+        font = pygame.font.Font("fonts/Lekton-Regular.ttf", size)
     # Label text
-    label = my_font.render(text, 1, (250, 250, 250))
+    label = font.render(text, 1, (250, 250, 250))
     # Display text
     screen.blit(label, location)
 

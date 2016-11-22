@@ -101,8 +101,8 @@ def main():
         # Update all sprites
         all_sprites.update()
 
-        fps_value = video.get_fps(clock)  # Get fps value
-        misc.display_text(screen, "fps:" + fps_value, 14, (850, 0))
+        fps_value = video.get_fps(clock).zfill(2)  # Get fps value
+        misc.display_text(screen, "fps:" + fps_value, 14, (855, 0))
 
         # Update display to show changes made in current iteration
         pygame.display.update()
