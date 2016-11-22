@@ -106,7 +106,8 @@ def ant_sugar_collision(sugar_list, ant_list, hole_list, screen):
                 sugar.remaining_sugar -= 1
                 sugar_exists = sugar.image_switch()
                 if not sugar_exists:
-                    sugar_list.remove(sugar)
+                    if sugar in sugar_list:
+                        sugar_list.remove(sugar)
     return sugar_list, ant_list
 
 
@@ -165,3 +166,14 @@ def face_return_loc(ant):
         str(ant.rect.y),
         angle))
     ant.direction = angle
+
+
+def user_add_ants(ant_list, ants, rock_list):
+    if pygame.key.get_pressed()[pygame.K_a]:
+        if ant_class.ants_underground > 0:
+            ant_list.append(ant_class.Ant(rock_list))
+            ants.add(ant_list[-1])  # Add it to ants sprite group
+            ant_class.ants_underground -= 1  # Decrement underground count
+    if pygame.key.get_pressed()[pygame.K_u]:
+        ant_class.ants_underground += 1
+    return ant_list, ants, rock_list

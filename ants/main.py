@@ -110,6 +110,8 @@ def main():
         # Save frame if video.video_mode
         video.save_screen(screen)
 
+        misc.user_add_ants(ant_list, ants, rock_list)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # If close button
                 logger.log("Quitting (QUIT event)", important=True)
