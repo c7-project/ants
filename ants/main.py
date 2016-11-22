@@ -103,11 +103,13 @@ def main():
         all_sprites.update()
 
         fps_value = video.get_fps(clock)  # Get fps value
-        misc.display_text(screen, "fps: " + fps_value, 14, (850, 0))
-        undergrounds_ants = ant_class.ants_underground
+        misc.display_text(screen, "fps: " + fps_value, 14, (843, 0))
         misc.display_text(screen, "Ants above ground: " + str(len(ant_list)), 14, (745, 10))
-        misc.display_text(screen, "Underground Ants: " + str(undergrounds_ants), 14, (752, 20))
+        misc.display_text(screen, "Underground Ants: " + str(ant_class.ants_underground), 14, (752, 20))
         misc.display_text(screen, "Number of holes: " + str(len(hole_class.hole_locations)), 14, (760, 30))
+        misc.display_text(screen, "Active sugar: " + str(sugar_class.active_sugar), 14, (781, 40))
+        misc.display_text(screen, "Eaten sugar: " + str(sugar_class.eaten_sugar), 14, (788, 50))
+        misc.display_text(screen, "Rocks: " + str(rock_class.number_of_rocks), 14, (830, 60))
         # misc.display_text(screen, "Number of rocks:" + )
 
         # Update display to show changes made in current iteration
