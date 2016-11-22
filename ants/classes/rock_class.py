@@ -1,7 +1,10 @@
 import pygame
 from random import randint
 import misc
+import logger
 import pixel_perfect
+
+number_of_rocks = 0
 
 
 class Rock(pygame.sprite.Sprite):
@@ -15,4 +18,8 @@ class Rock(pygame.sprite.Sprite):
         self.rect.x, self.rect.y = pos[0] - 40, pos[1] - 40
         if pygame.sprite.spritecollide(self, ant_list, False):
             raise ValueError("Rock cannot be placed on an ant.")
-        self.hitmask = pixel_perfect.get_colour_key_and_alpha_hitmask(self.image, self.rect)
+        global number_of_rocks
+        number_of_rocks += 1
+        logger.log("Added a rock")
+        self.hitmask = pixel_perfect\
+            .get_colour_key_and_alpha_hitmask(self.image, self.rect)

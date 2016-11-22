@@ -73,7 +73,6 @@ def main():
 
     while not done:  # Main game loop
         clock.tick(32)  # Frame-rate limit
-        # Add background image, overlaying everything
 
         ant_list, ants = misc.generate_new_ant(hole_list, ant_list, rock_list, ants, screen)
 
@@ -91,6 +90,8 @@ def main():
                     logger.log("ants_underground incremented")
 
         sugar_list, ant_list = misc.ant_sugar_collision(sugar_list, ant_list, hole_list, screen)
+
+        # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
 
         # Draw all sprites group to the screen

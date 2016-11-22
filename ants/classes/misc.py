@@ -3,6 +3,7 @@ from random import randint, choice
 from math import atan2, degrees
 import hole_class  # Used in ant_from_hole
 import ant_class
+import sugar_class
 import pixel_perfect
 import logger
 
@@ -14,14 +15,17 @@ def display_text(screen, text, size, location, bold=False, italic=False):
     :param text: Text to be displayed
     :param size: Text size
     :param location: Location on screen
+    :param bold: Uses bold Lekton
+    :param italic: Uses italic Lekton
     """
     # Create font
     if bold:
-        font = pygame.font.Font("fonts/Lekton-Bold.ttf", size)
+        font_type = "Bold"
     elif italic:
-        font = pygame.font.Font("fonts/Lekton-Italic.ttf", size)
+        font_type = "Italic"
     else:
-        font = pygame.font.Font("fonts/Lekton-Regular.ttf", size)
+        font_type = "Regular"
+    font = pygame.font.Font("fonts/Lekton-{}.ttf".format(font_type), size)
     # Label text
     label = font.render(text, 1, (250, 250, 250))
     # Display text
@@ -122,6 +126,12 @@ def ant_sugar_collision(sugar_list, ant_list, hole_list, screen):
                 ant.stop_count += randint(50, 87)
                 ant.head_start += 20
                 sugar.remaining_sugar -= 1
+                if sugar_class.active_sugar > 0:
+                    sugar_class.active_sugar -= 1
+                    sugar_class.eaten_sugar += 1
+                logger.log(
+                    "active sugar: " + str(sugar_class.active_sugar)
+                    + ", eaten sugar: " + str(sugar_class.eaten_sugar))
                 sugar_exists = sugar.image_switch()
                 if not sugar_exists:
                     if sugar in sugar_list:
