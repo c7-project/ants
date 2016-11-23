@@ -4,15 +4,18 @@
 def check_collision(obj1, obj2):
     """checks if two objects have collided, using hitmasks"""
     try:
-        rect1, rect2, hm1, hm2 = obj1.rect, obj2.rect, obj1.hitmask, obj2.hitmask
+        rect1, rect2, hm1, hm2 =\
+            obj1.rect, obj2.rect, obj1.hitmask, obj2.hitmask
     except AttributeError:
         return False
     rect = rect1.clip(rect2)
     if rect.width == 0 or rect.height == 0:
         return False
-    x1, y1, x2, y2 = rect.x - rect1.x, rect.y - rect1.y, rect.x - rect2.x, rect.y - rect2.y
-    for x in xrange(rect.width):
-        for y in xrange(rect.height):
+    x1, y1, x2, y2 =\
+        rect.x - rect1.x, rect.y - rect1.y,\
+        rect.x - rect2.x, rect.y - rect2.y
+    for x in range(rect.width):
+        for y in range(rect.height):
             if hm1[x1 + x][y1 + y] and hm2[x2 + x][y2 + y]:
                 return True
             else:
@@ -21,10 +24,13 @@ def check_collision(obj1, obj2):
 
 
 def get_colour_key_hitmask(image, rect, key=None):
-    """returns a hitmask using an image's colour_key.
-       image->pygame Surface,
-       rect->pygame Rect that fits image,
-       key->an over-ride colour, if not None will be used instead of the image's colour_key"""
+    """
+    returns a hit-mask using an image's colour_key.
+    image -> pygame Surface,
+    rect -> pygame Rect that fits image,
+    key -> an over-ride colour, if not None will
+        be used instead of the image's colour_key
+    """
     if not key:
         colour_key = image.get_colorkey()
     else:

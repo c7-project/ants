@@ -4,12 +4,11 @@ from classes import ant_class  # Ant
 from classes import hole_class  # Hole
 from classes import sugar_class  # Sugar
 from classes import rock_class  # Rock
-from classes import misc  # Other methods
 from classes import video  # Video
 from classes import logger  # Print to command line
-from classes import display
-from classes import ant_other
-from classes import sugar_other
+from classes import display  # Display methods
+from classes import ant_other  # Misc ant
+from classes import sugar_other  # Misc sugar
 
 
 def main():
@@ -77,22 +76,27 @@ def main():
     while not done:  # Main game loop
         clock.tick(30)  # Frame-rate limit
 
-        ant_list, ants = ant_other.generate_new_ant(hole_list, ant_list, rock_list, ants, screen)
+        ant_list, ants = ant_other.generate_new_ant(
+            hole_list, ant_list, rock_list, ants, screen)
 
         ant_list = ant_other.move_ants(ant_list, rock_list)
 
         for hole in hole_list:
+            # Create collision rectangle for hole
             hole_centre = pygame.draw.rect(screen, (0, 0, 0), (
                 hole.rect.x + 30, hole.rect.y + 30, 1, 1), 1)
             for ant in ant_list:
                 if ant.rect.colliderect(hole_centre) and ant.head_start == 0:
                     logger.log("Killing ant {}".format(str(ant)))
+                    # Remove ant
                     ant.kill()
                     ant_list.remove(ant)
+                    # Add an underground ant
                     ant_class.ants_underground += 1
                     logger.log("ants_underground incremented")
 
-        sugar_list, ant_list = sugar_other.ant_sugar_collision(sugar_list, ant_list, hole_list, screen)
+        sugar_list, ant_list = sugar_other.ant_sugar_collision(
+            sugar_list, ant_list, hole_list, screen)
 
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))

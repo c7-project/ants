@@ -112,26 +112,6 @@ def generate_new_ant(hole_list, ant_list, rock_list, ants, screen):
     return ant_list, ants
 
 
-def face_return_loc(ant):
-    """"
-    Sets the ant's direction to face its return location
-
-    Formerly 'smants_guidants'
-    """
-    angle = get_angle(
-        ant.rect.x + 12,
-        ant.rect.y + 12,
-        ant.return_loc[0],
-        ant.return_loc[1])
-    logger.log("hole:{},{} , ant:{},{} , angle:{}".format(
-        str(ant.return_loc[0]),
-        str(ant.return_loc[1]),
-        str(ant.rect.x),
-        str(ant.rect.y),
-        angle))
-    ant.direction = angle
-
-
 def user_add_ants(ant_list, ants, rock_list):
     if pygame.key.get_pressed()[pygame.K_a]:
         if ant_class.ants_underground > 0:

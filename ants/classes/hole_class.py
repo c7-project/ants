@@ -20,7 +20,8 @@ class Hole(pygame.sprite.Sprite):
         else:
             self.rect.x, self.rect.y = get_valid_hole_location()
         global hole_locations
-        hole_locations.append([self.rect.x, self.rect.y])  # Add new coordinates to list
+        # Add new coordinates to list
+        hole_locations.append([self.rect.x, self.rect.y])
 
 
 def get_valid_hole_location():
