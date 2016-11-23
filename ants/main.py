@@ -7,6 +7,9 @@ from classes import rock_class  # Rock
 from classes import misc  # Other methods
 from classes import video  # Video
 from classes import logger  # Print to command line
+from classes import display
+from classes import ant_other
+from classes import sugar_other
 
 
 def main():
@@ -21,7 +24,7 @@ def main():
     screen = pygame.display.set_mode((900, 600))  # Set window size
     logger.log("Set title", important=True)
 
-    misc.display_text(screen, "loading...", 28, (20, 20))
+    display.display_text(screen, "loading...", 28, (20, 20))
     pygame.display.update()  # Update to loading screen
     logger.log("Loading screen", important=True)
 
@@ -74,9 +77,9 @@ def main():
     while not done:  # Main game loop
         clock.tick(30)  # Frame-rate limit
 
-        ant_list, ants = misc.generate_new_ant(hole_list, ant_list, rock_list, ants, screen)
+        ant_list, ants = ant_other.generate_new_ant(hole_list, ant_list, rock_list, ants, screen)
 
-        ant_list = misc.move_ants(ant_list, rock_list)
+        ant_list = ant_other.move_ants(ant_list, rock_list)
 
         for hole in hole_list:
             hole_centre = pygame.draw.rect(screen, (0, 0, 0), (
@@ -89,7 +92,7 @@ def main():
                     ant_class.ants_underground += 1
                     logger.log("ants_underground incremented")
 
-        sugar_list, ant_list = misc.ant_sugar_collision(sugar_list, ant_list, hole_list, screen)
+        sugar_list, ant_list = sugar_other.ant_sugar_collision(sugar_list, ant_list, hole_list, screen)
 
         # Add background image, overlaying everything
         screen.blit(bg, (0, 0))
@@ -103,7 +106,7 @@ def main():
         all_sprites.update()
 
         # Shows the scoreboard
-        misc.scoreboard(screen, clock, ant_list)
+        display.scoreboard(screen, clock, ant_list)
 
         # Update display to show changes made in current iteration
         pygame.display.update()
@@ -111,7 +114,7 @@ def main():
         # Save frame if video.video_mode
         video.save_screen(screen)
 
-        misc.user_add_ants(ant_list, ants, rock_list)
+        ant_other.user_add_ants(ant_list, ants, rock_list)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # If close button

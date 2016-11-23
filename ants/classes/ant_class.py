@@ -3,7 +3,7 @@ from random import randint, choice
 import math
 import hole_class
 import pixel_perfect
-
+import ant_other
 import misc
 
 ants_underground = 50  # Number of ants currently underground
@@ -16,7 +16,7 @@ class Ant(pygame.sprite.Sprite):
 
     def __init__(self, rock_list, from_hole=True):
         pygame.sprite.Sprite.__init__(self)
-        self.image_list = misc.load_ant_image_list()
+        self.image_list = ant_other.load_ant_image_list()
         self.image = self.image_list[0]
         self.image_iteration = 0
         self.image_index = 0
@@ -25,7 +25,7 @@ class Ant(pygame.sprite.Sprite):
         self.found_food = False
         self.return_loc = []
         if from_hole:
-            x_and_y = misc.ant_from_hole()
+            x_and_y = ant_other.ant_from_hole()
             self.rect.x, self.rect.y = x_and_y
         else:
             self.rect.x = randint(1, 879)
