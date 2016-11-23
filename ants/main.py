@@ -4,6 +4,7 @@ from classes import ant_class  # Ant
 from classes import hole_class  # Hole
 from classes import sugar_class  # Sugar
 from classes import rock_class  # Rock
+from classes import misc  # Other methods
 from classes import video  # Video
 from classes import logger  # Print to command line
 from classes import display  # Display methods
@@ -34,6 +35,7 @@ def main():
 
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
+    bg_right = pygame.image.load("images/score-board.jpg")
     logger.log("Loaded background image", important=True)
 
     initial_holes = 1  # Number to be initially generated
@@ -110,6 +112,8 @@ def main():
         # Update all sprites
         all_sprites.update()
 
+        # Scoreboard background
+        screen.blit(bg_right, (900, 0))
         # Shows the scoreboard
         display.scoreboard(screen, clock, ant_list)
 
@@ -125,31 +129,29 @@ def main():
             if event.type == pygame.QUIT:  # If close button
                 logger.log("Quitting (QUIT event)", important=True)
                 done = True  # Exit
-
+            mouse = misc.get_mouse_loc()
             if event.type == pygame.KEYDOWN:  # If key pressed
                 if event.key == pygame.K_ESCAPE:  # If 'esc' pressed
                     logger.log("Quitting (ESC key)", important=True)
                     done = True  # Exit
-
-                elif event.key == pygame.K_h:  # If 'h' is pressed
-                    logger.log("Adding a hole")
-                    hole_list.append(hole_class.Hole(at_mouse=True))
-                    holes.add(hole_list[-1])
-
-                elif event.key == pygame.K_s:  # If 's' is pressed
-                    logger.log("Adding sugar")
-                    sugar_list.append(sugar_class.Sugar())
-                    sugars.add(sugar_list[-1])
-
-                elif event.key == pygame.K_r:  # If 'r' is pressed
-                    logger.log("Adding a rock")
-                    try:
-                        rock_list.append(rock_class.Rock(ant_list))
-                        rocks.add(rock_list[-1])
-                    except ValueError:
-                        logger.log(
-                            "Rock not placed - ant collision detected.",
-                            important=True)
+                elif mouse[0] < 900:
+                    if event.key == pygame.K_h:  # If 'h' is pressed
+                        logger.log("Adding a hole")
+                        hole_list.append(hole_class.Hole(at_mouse=True))
+                        holes.add(hole_list[-1])
+                    elif event.key == pygame.K_s:  # If 's' is pressed
+                        logger.log("Adding sugar")
+                        sugar_list.append(sugar_class.Sugar())
+                        sugars.add(sugar_list[-1])
+                    elif event.key == pygame.K_r:  # If 'r' is pressed
+                        logger.log("Adding a rock")
+                        try:
+                            rock_list.append(rock_class.Rock(ant_list))
+                            rocks.add(rock_list[-1])
+                        except ValueError:
+                            logger.log(
+                                "Rock not placed - ant collision detected.",
+                                important=True)
 
     logger.log("~~~~~ THE END ~~~~~", important=True)
 

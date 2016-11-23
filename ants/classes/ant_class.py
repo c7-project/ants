@@ -13,8 +13,10 @@ class Ant(pygame.sprite.Sprite):
     """
     Ants and their many mysterious methods
     """
-
     def __init__(self, rock_list, from_hole=True):
+        """
+        Set up ant class variables
+        """
         pygame.sprite.Sprite.__init__(self)
         self.image_list = ant_other.load_ant_image_list()
         self.image = self.image_list[0]
