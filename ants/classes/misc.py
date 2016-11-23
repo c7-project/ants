@@ -92,6 +92,7 @@ def move_ants(ant_list, rock_list):
             while pygame.sprite.spritecollide(
                     ant, rock_list, False
             ) and pixel_perfect.check_collision(ant, rock) and not give_up:
+                ant.check_escape()
                 attempts += 1
                 if attempts > 40:
                     ant.direction += randint(0, 359)
@@ -114,10 +115,11 @@ def move_ant(ant):
     if ant.stop_count > 0:  # If need to wait for stop
         ant.stop_count -= 1
     else:  # Rotate and/or move or neither
-        if ant.found_food:
-            face_return_loc(ant)
         if randint(0, 20) > 0:  # Move
             ant.move(randint(1, 3))
+        if ant.found_food:
+            face_return_loc(ant)
+            ant.rotate(0)
         if randint(0, 4) > 0:  # Rotate
             ant.rotate(get_random_ish_direction(8))
         if randint(0, 180) == 0:  # Stop
@@ -138,6 +140,7 @@ def ant_sugar_collision(sugar_list, ant_list, hole_list, screen):
         for ant in ant_list:
             if ant.rect.colliderect(sugar_centre) and ant.head_start == 0:
                 ant.found_food = True
+                ant.scout_ant = False
                 ant.set_return_hole(hole_list)
                 ant.stop_count += randint(50, 87)
                 ant.head_start += 20

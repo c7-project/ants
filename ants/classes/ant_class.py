@@ -1,6 +1,7 @@
 import pygame
 from random import randint, choice
 import math
+import hole_class
 import pixel_perfect
 
 import misc
@@ -34,6 +35,8 @@ class Ant(pygame.sprite.Sprite):
         self.stop_count = 0
         self.random_rotate = True
         self.head_start = 20
+        self.free_will_timer = 0
+        self.scout_ant = True
         if pygame.sprite.spritecollide(self, rock_list, False):
             raise ValueError("There's a rock in the way :(")
 
@@ -140,6 +143,7 @@ class Ant(pygame.sprite.Sprite):
         Moves forwards in the ant's current direction
         :param distance: How far the ant moves
         """
+        self.check_escape(collision=False)
         self.previous_location = [self.rect.x, self.rect.y]
         if self.head_start > 0:
             self.head_start -= 1
@@ -170,3 +174,21 @@ class Ant(pygame.sprite.Sprite):
         self.image_iteration += 1
         self.image_iteration %= 16
         self.image_index = self.image_iteration // 4
+
+    def check_escape(self, collision=True):
+        """
+        Escape from a rock collision when returning to holes
+        """
+        if self.scout_ant:
+            return None
+        if collision and self.found_food:  # If returning ant collides
+            self.found_food = False  # Make the ant forget about food
+            self.free_will_timer = randint(10, 70)  # Random timeout time
+        elif not self.found_food and not collision:  # If ant moving randomly
+            if self.free_will_timer > 0:  # If the ant has free will
+                self.free_will_timer -= 1  # Take free will away
+            else:
+                if randint(0, 3) == 0:  # Sometimes pick different hole
+                    new_return = choice(hole_class.hole_locations)
+                    self.return_loc = [new_return[0] + 30, new_return[1] + 30]
+                self.found_food = True  # Start navigating to hole again

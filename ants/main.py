@@ -72,7 +72,7 @@ def main():
     logger.log("Initialised clock", important=True)
 
     while not done:  # Main game loop
-        clock.tick(32)  # Frame-rate limit
+        clock.tick(30)  # Frame-rate limit
 
         ant_list, ants = misc.generate_new_ant(hole_list, ant_list, rock_list, ants, screen)
 
