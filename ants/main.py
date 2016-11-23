@@ -20,7 +20,7 @@ def main():
     pygame.init()  # Initialise pygame
     logger.log("Init done", important=True)
     # Set window title
-    screen = pygame.display.set_mode((900, 600))  # Set window size
+    screen = pygame.display.set_mode((1052, 600))  # Set window size
     logger.log("Set title", important=True)
 
     display.display_text(screen, "loading...", 28, (20, 20))
@@ -99,6 +99,7 @@ def main():
             sugar_list, ant_list, hole_list, screen)
 
         # Add background image, overlaying everything
+        screen.blit(bg, (150, 0))
         screen.blit(bg, (0, 0))
 
         # Draw all sprites group to the screen

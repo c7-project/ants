@@ -167,10 +167,16 @@ class Ant(pygame.sprite.Sprite):
         self.rotate(0)
 
     def set_return_hole(self, hole_list):
+        """
+        Its sets it up so that it can choose a random hole from hole_list
+        """
         hole = choice(hole_list)
         self.return_loc = [hole.rect.x + 30, hole.rect.y + 30]
 
     def movement_variant(self):
+        """
+        
+        """
         self.image_iteration += 1
         self.image_iteration %= 16
         self.image_index = self.image_iteration // 4
