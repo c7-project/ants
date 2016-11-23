@@ -40,6 +40,7 @@ To install Pycharm, continue to run these commands:
 - **Keep commit titles short**, but feel free to add longer descriptions (in PyCharm enter two new lines below title for description)
 - When committing some work related to an issue, **reference the issue in the commit title as '#X'**, where X is the issue number
 - **Look at the issues page** often. The issues are prioritised and will help keep track of development. Don't start impulsively developing a brand new feature before planning and discussing it with the team
+- Make sure you pull the latest changes ('Update' in PyCharm) regularly, especially before committing - otherwise you'll have to merge before you push to master and it'll add merge commits bla bla bla
 - If you're unsure of anything to do with development or the true meaning of life, **ask [James](https://github.com/jamesevickery)**
 
 ## Sources
