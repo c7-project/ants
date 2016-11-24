@@ -6,7 +6,6 @@ import pixel_perfect
 import ant_other
 import misc
 
-
 ants_underground = 50  # Number of ants currently underground
 
 
@@ -14,6 +13,7 @@ class Ant(pygame.sprite.Sprite):
     """
     Ants and their many mysterious methods
     """
+
     def __init__(self, rock_list, from_hole=True):
         """
         Set up ant class variables
@@ -21,7 +21,6 @@ class Ant(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image_list = ant_other.load_ant_image_list()
         self.image = self.image_list[0]
-        self.ants_out = False
         self.image_iteration = 0
         self.image_index = 0
         self.direction = randint(0, 359)
@@ -56,18 +55,6 @@ class Ant(pygame.sprite.Sprite):
         self.direction += angle
         self.image = misc.rotate_center(
             self.image_list[self.image_index], self.direction)
-
-    @staticmethod
-    def ants_buffer(hiding_time, ants_underground, ants_out):
-        while not ants_out:
-            if randint(0, 7) == 6:
-                hiding_time += 1
-            if hiding_time == 10:
-                ants_out = True
-                ants_underground += 1
-
-
-
 
     def resolve_direction(self):
         """
@@ -191,7 +178,7 @@ class Ant(pygame.sprite.Sprite):
 
     def movement_variant(self):
         """
-        
+        Update ant image for walking sprites
         """
         self.image_iteration += 1
         self.image_iteration %= 16
