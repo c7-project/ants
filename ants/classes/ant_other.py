@@ -2,6 +2,7 @@ import pygame
 from random import randint, choice
 import ant_class
 import hole_class
+import sugar_class
 import logger
 import pixel_perfect
 import display
@@ -21,6 +22,13 @@ def move_ants(ant_list, rock_list):
     new_list = []  # List to return
     for ant in ant_list:  # For each ant
         initial_ant = ant.rect.x, ant.rect.y, ant.direction
+        if not ant.found_food and randint(0, 350) == 0:
+            ant.random_sugar_targeting()
+        if ant.return_loc\
+                and not ant.found_food\
+                and [ant.return_loc[0] - 57, ant.return_loc[1] - 57
+                     ] not in sugar_class.sugar_locations:
+            ant.return_loc = []
         ant = move_ant(ant)
         for rock in rock_list:
             attempts = 0
@@ -30,10 +38,10 @@ def move_ants(ant_list, rock_list):
             ) and pixel_perfect.check_collision(ant, rock) and not give_up:
                 ant.check_escape()
                 attempts += 1
-                if attempts > 40:
+                if attempts > 10:
                     ant.direction += randint(0, 359)
                     ant.move(randint(3, 7))
-                    if attempts > 100:
+                    if attempts > 11:
                         give_up = True
                 else:
                     ant.rect.x, ant.rect.y, ant.direction = initial_ant
@@ -53,7 +61,7 @@ def move_ant(ant):
     else:  # Rotate and/or move or neither
         if randint(0, 20) > 0:  # Move
             ant.move(randint(1, 3))
-        if ant.found_food:
+        if ant.return_loc:
             face_return_loc(ant)
             ant.rotate(0)
         if randint(0, 4) > 0:  # Rotate
@@ -103,7 +111,7 @@ def generate_new_ant(hole_list, ant_list, rock_list, ants, screen):
             except ValueError as e:
                 logger.log("Ant can't appear from hole - " + str(e))
             except IndexError:
-                logger.log("No holes exist", important=True)
+                logger.log("No holes exist, can't add ant")
     else:  # No holes exist
         display.display_text(
             screen,

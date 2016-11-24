@@ -2,6 +2,7 @@ import pygame
 from random import randint, choice
 import math
 import hole_class
+import sugar_class
 import pixel_perfect
 import ant_other
 import misc
@@ -27,6 +28,7 @@ class Ant(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.found_food = False
         self.return_loc = []
+        self.random_sugar_targeting()
         if from_hole:
             x_and_y = ant_other.ant_from_hole()
             self.rect.x, self.rect.y = x_and_y
@@ -188,12 +190,13 @@ class Ant(pygame.sprite.Sprite):
         """
         Escape from a rock collision when returning to holes
         """
-        if self.scout_ant:
+        if not self.return_loc:
             return None
-        if collision and self.found_food:  # If returning ant collides
+        if collision and self.return_loc:  # If returning ant collides
             self.found_food = False  # Make the ant forget about food
+            self.return_loc = []
             self.free_will_timer = randint(10, 70)  # Random timeout time
-        elif not self.found_food and not collision:  # If ant moving randomly
+        elif not self.return_loc and not collision:  # If ant moving randomly
             if self.free_will_timer > 0:  # If the ant has free will
                 self.free_will_timer -= 1  # Take free will away
             else:
@@ -201,3 +204,8 @@ class Ant(pygame.sprite.Sprite):
                     new_return = choice(hole_class.hole_locations)
                     self.return_loc = [new_return[0] + 30, new_return[1] + 30]
                 self.found_food = True  # Start navigating to hole again
+
+    def random_sugar_targeting(self):
+        if randint(0, 1) == 0 and sugar_class.sugar_locations:
+            random_sugar = choice(sugar_class.sugar_locations)
+            self.return_loc = [random_sugar[0] + 57, random_sugar[1] + 57]
