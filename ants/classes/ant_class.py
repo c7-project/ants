@@ -20,6 +20,7 @@ class Ant(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image_list = ant_other.load_ant_image_list()
         self.image = self.image_list[0]
+        self.ants_underground_display = False
         self.image_iteration = 0
         self.image_index = 0
         self.direction = randint(0, 359)
@@ -54,6 +55,19 @@ class Ant(pygame.sprite.Sprite):
         self.direction += angle
         self.image = misc.rotate_center(
             self.image_list[self.image_index], self.direction)
+
+    @staticmethod
+    def ants_buffer(hiding_time, ants_underground, ants_underground_display):
+        while not ants_underground_display:
+            if randint(0, 7) == 6:
+                hiding_time += 1
+            if hiding_time == 10:
+                ants_underground_display = True
+                ants_underground += 1
+
+
+
+
 
     def resolve_direction(self):
         """

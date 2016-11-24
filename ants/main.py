@@ -94,7 +94,7 @@ def main():
                     ant.kill()
                     ant_list.remove(ant)
                     # Add an underground ant
-                    ant_class.ants_underground += 1
+                    ant.ants_buffer(0, 0, ant_class.ants_underground)
                     logger.log("ants_underground incremented")
 
         sugar_list, ant_list = sugar_other.ant_sugar_collision(

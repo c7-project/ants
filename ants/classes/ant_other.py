@@ -112,6 +112,8 @@ def generate_new_ant(hole_list, ant_list, rock_list, ants, screen):
     return ant_list, ants
 
 
+
+
 def user_add_ants(ant_list, ants, rock_list):
     if pygame.key.get_pressed()[pygame.K_a]:
         if ant_class.ants_underground > 0:
