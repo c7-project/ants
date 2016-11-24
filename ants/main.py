@@ -12,12 +12,15 @@ from classes import ant_other  # Misc ant
 from classes import sugar_other  # Misc sugar
 
 
+
+
 def main():
     """
     Main game code
 
     Contains pygame setup and the main game loop
     """
+    ants_underground_display = ant_class.ants_underground
     pygame.init()  # Initialise pygame
     logger.log("Init done", important=True)
     # Set window title
@@ -94,8 +97,9 @@ def main():
                     ant.kill()
                     ant_list.remove(ant)
                     # Add an underground ant
+                    ants_underground_display += len(ant_list)
                     ant.ants_buffer(0, 0, ant_class.ants_underground)
-                    logger.log("ants_underground incremented")
+                    logger.log("ants_underground incremented" + str(ants_underground_display))
 
         sugar_list, ant_list = sugar_other.ant_sugar_collision(
             sugar_list, ant_list, hole_list, screen)
