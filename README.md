@@ -1,6 +1,8 @@
 # ants
 ant simulation: artificial intelligence experiment
 
+![c7ants](/ants/images/logos/logo01a.jpg)
+
 ---
 
 ## Development Software Requirements
@@ -40,7 +42,7 @@ To install Pycharm, continue to run these commands:
 - **Keep commit titles short**, but feel free to add longer descriptions (in PyCharm enter two new lines below title for description)
 - When committing some work related to an issue, **reference the issue in the commit title as '#X'**, where X is the issue number
 - **Look at the issues page** often. The issues are prioritised and will help keep track of development. Don't start impulsively developing a brand new feature before planning and discussing it with the team
-- Make sure you pull the latest changes ('Update' in PyCharm) regularly, especially before committing - otherwise you'll have to merge before you push to master and it'll add merge commits bla bla bla
+- **Make sure you pull the latest changes** ('Update' in PyCharm) **regularly**, especially before committing - otherwise you'll have to merge before you push to master and it'll add merge commits bla bla bla
 - If you're unsure of anything to do with development or the true meaning of life, **ask [James](https://github.com/jamesevickery)**
 
 ## Sources
@@ -48,5 +50,5 @@ To install Pycharm, continue to run these commands:
 _Please append to this list when using third-party resources_
 
 - Background image: [fabooguy.deviantart.com](http://fabooguy.deviantart.com/art/Dirt-Ground-Texture-Tileable-2048x2048-441212191)
-- Rock sprite images: [1](http://www.rocasa.es/), [2](http://ggyma.geo.ucm.es/docencia/MasterGeoBio/), [3](http://lascosasdejuampa1.blogspot.com/)
-- Lekton font: [fonts.google.com/specimen/Lekton](https://fonts.google.com/specimen/Lekton)
+- Rock sprite images: [1](http://www.rocasa.es/), [2](http://ggyma.geo.ucm.es/docencia/MasterGeoBio/), [3](http://lascosasdejuampa1.blogspot.com/), [4](http://eldorado.webcubecms.net/products/stone/nationwide-profiles/top-rock/)
+- Lekton monospace font: [fonts.google.com/specimen/Lekton](https://fonts.google.com/specimen/Lekton)
