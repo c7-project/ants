@@ -22,7 +22,7 @@ def move_ants(ant_list, rock_list):
     new_list = []  # List to return
     for ant in ant_list:  # For each ant
         initial_ant = ant.rect.x, ant.rect.y, ant.direction
-        if not ant.found_food and randint(0, 350) == 0:
+        if not ant.found_food and randint(0, 600) == 0:
             ant.random_sugar_targeting()
         if ant.return_loc\
                 and not ant.found_food\
