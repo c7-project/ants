@@ -18,7 +18,7 @@ ant simulation: artificial intelligence experiment
 
     sudo -s
     apt-get update
-    apt-get install -y git
+    apt-get install -y git software-properties-common
     add-apt-repository -y ppa:fkrull/deadsnakes
     apt-get update
     apt-get install -y python2.7
