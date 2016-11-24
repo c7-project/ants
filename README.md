@@ -1,7 +1,7 @@
 # ants
 ant simulation: artificial intelligence experiment
 
-![c7ants](/ants/images/logos/logo01a.jpg)
+![c7ants](/ants/images/logos/logo01a2.jpg)
 
 ---
 
