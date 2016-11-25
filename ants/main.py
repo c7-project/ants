@@ -145,15 +145,19 @@ def main():
                         logger.log("Adding sugar")
                         sugar_list.append(sugar_class.Sugar())
                         sugars.add(sugar_list[-1])
+
+
                     elif event.key == pygame.K_r:  # If 'r' is pressed
                         logger.log("Adding a rock")
                         try:
-                            rock_list.append(rock_class.Rock(ant_list))
+                            rock_list.append(rock_class.Rock(ant_list, rock_list))
                             rocks.add(rock_list[-1])
                         except ValueError:
                             logger.log(
-                                "Rock not placed - ant collision detected.",
+                                "Rock not placed - collision detected with other rock or ant.",
                                 important=True)
+
+
 
     logger.log("~~~~~ THE END ~~~~~", important=True)
 

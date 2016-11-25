@@ -8,7 +8,7 @@ number_of_rocks = 0
 
 
 class Rock(pygame.sprite.Sprite):
-    def __init__(self, ant_list):
+    def __init__(self, ant_list, rock_list):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(
             "images/rocks/rock_{}.png".format(
@@ -18,6 +18,8 @@ class Rock(pygame.sprite.Sprite):
         self.rect.x, self.rect.y = pos[0] - 40, pos[1] - 40
         if pygame.sprite.spritecollide(self, ant_list, False):
             raise ValueError("Rock cannot be placed on an ant.")
+        if pygame.sprite.spritecollide(self, rock_list, False):
+            raise ValueError("Rock cannot be placed on other rock.")
         global number_of_rocks
         number_of_rocks += 1
         logger.log("Added a rock")
