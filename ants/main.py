@@ -18,6 +18,8 @@ def main():
 
     Contains pygame setup and the main game loop
     """
+    alternative_pointer = True  # Use precise mouse pointer
+
     ants_underground_display = ant_class.ants_underground
     pygame.init()  # Initialise pygame
     logger.log("Init done", important=True)
@@ -33,6 +35,11 @@ def main():
         "Ants: An Artificial Intelligence Experiment by C7")
     logger.log("Set title", important=True)
     done = False  # The game loop is broken when done becomes True
+
+    # Mouse pointer load
+    if alternative_pointer or video.video_mode:
+        pointer = pygame.image.load("images/mouse-pointer.png")
+        pygame.mouse.set_visible(False)
 
     # Load background image resource
     bg = pygame.image.load("images/bg01a.jpg")
@@ -119,6 +126,12 @@ def main():
         # Shows the scoreboard
         display.scoreboard(screen, clock, ant_list)
 
+        # Mouse pointer overlay
+        if alternative_pointer or video.video_mode:
+            mouse_loc = misc.get_mouse_loc()
+            if pygame.mouse.get_focused():
+                screen.blit(pointer, (mouse_loc[0]-8, mouse_loc[1]-8))
+
         # Update display to show changes made in current iteration
         pygame.display.update()
 
@@ -145,7 +158,6 @@ def main():
                         logger.log("Adding sugar")
                         sugar_list.append(sugar_class.Sugar())
                         sugars.add(sugar_list[-1])
-
 
                     elif event.key == pygame.K_r:  # If 'r' is pressed
                         logger.log("Adding a rock")
