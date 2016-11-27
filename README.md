@@ -1,7 +1,7 @@
 # ants
 ant simulation: artificial intelligence experiment
 
-![c7ants](/ants/images/logos/logo01a2.jpg)
+[![YouTube: ants: an artificial intelligence experiment by c7](https://cloud.githubusercontent.com/assets/14852491/20645401/2b536c82-b455-11e6-8e10-ceeb5f913c5f.png)](https://youtu.be/m7c78RZ0-nY)
 
 ---
 
