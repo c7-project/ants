@@ -86,9 +86,11 @@ def main():
     while not done:  # Main game loop
         clock.tick(30)  # Frame-rate limit
 
+        # Randomly adds new ants
         ant_list, ants = ant_other.generate_new_ant(
             hole_list, ant_list, rock_list, ants, screen)
 
+        # Moves all ants randomly
         ant_list = ant_other.move_ants(ant_list, rock_list)
 
         for hole in hole_list:
@@ -106,6 +108,7 @@ def main():
                     ant_class.ants_underground += 1
                     logger.log("ants_underground incremented")
 
+        # Changes state of ants that have found sugar
         sugar_list, ant_list = sugar_other.ant_sugar_collision(
             sugar_list, ant_list, hole_list, screen)
 
@@ -162,14 +165,13 @@ def main():
                     elif event.key == pygame.K_r:  # If 'r' is pressed
                         logger.log("Adding a rock")
                         try:
-                            rock_list.append(rock_class.Rock(ant_list, rock_list))
+                            rock_list.append(rock_class.Rock(
+                                ant_list, rock_list))
                             rocks.add(rock_list[-1])
                         except ValueError:
                             logger.log(
-                                "Rock not placed - collision detected with other rock or ant.",
+                                "Rock not placed - collision detected",
                                 important=True)
-
-
 
     logger.log("~~~~~ THE END ~~~~~", important=True)
 

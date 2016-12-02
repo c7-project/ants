@@ -152,3 +152,35 @@ def ant_from_hole():
     x = random_hole[0] + 18
     y = random_hole[1] + 18
     return x, y
+
+
+def calculate_corner_escape(direction, self_x, self_y):
+    random_rotate = False
+
+    if self_x <= 30 and self_y <= 30:  # Top left corner
+        if 45 < direction < 225:  # Towards left
+            direction += randint(14, 24)
+        else:  # Towards top
+            direction -= randint(14, 24)
+
+    elif self_x >= 846 and self_y <= 30:  # Top right corner
+        if 135 < direction < 315:  # Towards right
+            direction -= randint(14, 24)
+        else:  # Towards top
+            direction += randint(14, 24)
+
+    elif self_x <= 30 and self_y >= 546:  # Bottom left corner
+        if 135 < direction < 315:  # Towards bottom
+            direction += randint(14, 24)
+        else:  # Towards left
+            direction -= randint(14, 24)
+
+    elif self_x >= 846 and self_y >= 546:  # Bottom right corner
+        if 45 < direction < 225:  # Towards bottom
+            direction -= randint(14, 24)
+        else:  # Towards right
+            direction += randint(14, 24)
+
+    else:  # Not in any corners
+        random_rotate = True
+    return random_rotate, direction

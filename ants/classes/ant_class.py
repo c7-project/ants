@@ -19,30 +19,34 @@ class Ant(pygame.sprite.Sprite):
         """
         Set up ant class variables
         """
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self)  # Pygame sprite initialisation
+        # Load ant images to list
         self.image_list = ant_other.load_ant_image_list()
-        self.image = self.image_list[0]
-        self.image_iteration = 0
+        self.image = self.image_list[0]  # Assign ant the initial image
+        self.image_iteration = 0  # Initialise image swapping variables
         self.image_index = 0
-        self.direction = randint(0, 359)
-        self.rect = self.image.get_rect()
-        self.found_food = False
-        self.return_loc = []
-        self.random_sugar_targeting()
-        if from_hole:
+        self.direction = randint(0, 359)  # Ant from hole in random direction
+        self.rect = self.image.get_rect()  # Initialise sprite's rect
+        self.found_food = False  # Ant hasn't yet found food
+        self.return_loc = []  # Ant doesn't have a return target yet
+        self.random_sugar_targeting()  # Possibility of targeting sugar
+        if from_hole:  # Generate location based on a random hole's location
             x_and_y = ant_other.ant_from_hole()
             self.rect.x, self.rect.y = x_and_y
-        else:
+        else:  # Completely random location
             self.rect.x = randint(1, 879)
             self.rect.y = randint(1, 579)
+        # Ant's initial hitmask
         self.hitmask = pixel_perfect.get_alpha_hitmask(self.image, self.rect)
+        # Track ant's location
         self.previous_location = [self.rect.x, self.rect.y]
-        self.stop_count = 0
-        self.random_rotate = True
-        self.head_start = 20
-        self.free_will_timer = 0
-        self.scout_ant = True
+        self.stop_count = 0  # How long ant should stop for
+        self.random_rotate = True  # Ant should rotate randomly
+        self.head_start = 20  # Time (frames) to escape hole
+        self.free_will_timer = 0  # Can roam freely, even when targeting
+        self.scout_ant = True  # Ant is currently randomly searching for food
         if pygame.sprite.spritecollide(self, rock_list, False):
+            # Ants can't appear where there's a rock in the way
             raise ValueError("There's a rock in the way :(")
 
     def rotate(self, angle):
@@ -74,39 +78,10 @@ class Ant(pygame.sprite.Sprite):
 
         This needs to be refactored a lot - maybe a method for each 'if'.
         """
-        self_x = self.rect.x
-        self_y = self.rect.y
-        direction = self.direction
-        random_rotate = False
-
-        if self_x <= 30 and self_y <= 30:  # Top left corner
-            if 45 < direction < 225:  # Towards left
-                direction += randint(14, 24)
-            else:  # Towards top
-                direction -= randint(14, 24)
-
-        elif self_x >= 846 and self_y <= 30:  # Top right corner
-            if 135 < direction < 315:  # Towards right
-                direction -= randint(14, 24)
-            else:  # Towards top
-                direction += randint(14, 24)
-
-        elif self_x <= 30 and self_y >= 546:  # Bottom left corner
-            if 135 < direction < 315:  # Towards bottom
-                direction += randint(14, 24)
-            else:  # Towards left
-                direction -= randint(14, 24)
-
-        elif self_x >= 846 and self_y >= 546:  # Bottom right corner
-            if 45 < direction < 225:  # Towards bottom
-                direction -= randint(14, 24)
-            else:  # Towards right
-                direction += randint(14, 24)
-
-        else:  # Not in any corners
-            random_rotate = True
-        self.random_rotate = random_rotate
-        self.direction = direction
+        # Assign new random_rotate and direction
+        self.random_rotate, self.direction =\
+            ant_other.calculate_corner_escape(
+                self.direction, self.rect.x, self.rect.y)
 
     def change_collision_direction(self, boundary_value):
         """
