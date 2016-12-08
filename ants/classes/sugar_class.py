@@ -1,7 +1,7 @@
 import pygame
 import misc
 
-sugar_locations = []
+sugar_locations = []  # Appended to when sugar is added. Stores all x,y
 active_sugar = 0
 eaten_sugar = 0
 
@@ -24,15 +24,21 @@ class Sugar(pygame.sprite.Sprite):
         sugar_locations.append([self.rect.x, self.rect.y])
 
     def image_switch(self):
+        """
+        Change to new images with less sugar
+        """
         value = (self.remaining_sugar + 4) // 5
-        if value == 0:
-            self.kill()
+        if value == 0:  # Sugar is completely gone
+            self.kill()  # Sugar is removed (sprite killed)
             global sugar_locations
             location = [self.rect.x, self.rect.y]
             if location in sugar_locations:
+                # Remove sugar from global list
                 sugar_locations.remove(location)
             return False
         elif self.image_value != value:
+            # Switch to relevant image according to image value
+            # Image only loaded when value has changed to improve efficiency
             self.image_value = value
             self.image = pygame.image.load(
                 "images/sugar/{}.png".format(str(value)))

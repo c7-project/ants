@@ -23,26 +23,26 @@ def move_ants(ant_list, rock_list):
     for ant in ant_list:  # For each ant
         initial_ant = ant.rect.x, ant.rect.y, ant.direction
         if not ant.found_food and randint(0, 600) == 0:
-            ant.random_sugar_targeting()
+            ant.random_sugar_targeting()  # Somtimes target sugar
         if ant.return_loc\
                 and not ant.found_food\
                 and [ant.return_loc[0] - 57, ant.return_loc[1] - 57
                      ] not in sugar_class.sugar_locations:
-            ant.return_loc = []
-        ant = move_ant(ant)
-        for rock in rock_list:
-            attempts = 0
+            ant.return_loc = []  # Stop targetting sugar
+        ant = move_ant(ant)  # Call function to move ants
+        for rock in rock_list:  # Avoid rocks
+            attempts = 0  # How many times escape has been attempted
             give_up = False
             while pygame.sprite.spritecollide(
                     ant, rock_list, False
             ) and pixel_perfect.check_collision(ant, rock) and not give_up:
                 ant.check_escape()
-                attempts += 1
+                attempts += 1  # Next attempt
                 if attempts > 10:
-                    ant.direction += randint(0, 359)
+                    ant.direction += randint(0, 359)  # Randomly turn
                     ant.move(randint(3, 7))
                     if attempts > 11:
-                        give_up = True
+                        give_up = True  # Give up or it'll take too long
                 else:
                     ant.rect.x, ant.rect.y, ant.direction = initial_ant
                     abs_angle_change = randint(20, 100)

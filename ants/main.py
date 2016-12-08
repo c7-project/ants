@@ -143,7 +143,8 @@ def main():
 
         ant_other.user_add_ants(ant_list, ants, rock_list)
 
-        for event in pygame.event.get():
+        # Check all pygame events to check for quit events and keypresses
+        for event in pygame.event.get():  # Get events
             if event.type == pygame.QUIT:  # If close button
                 logger.log("Quitting (QUIT event)", important=True)
                 done = True  # Exit

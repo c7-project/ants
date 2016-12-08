@@ -21,7 +21,7 @@ class Ant(pygame.sprite.Sprite):
         """
         pygame.sprite.Sprite.__init__(self)  # Pygame sprite initialisation
         # Load ant images to list
-        self.image_list = ant_other.load_ant_image_list()
+        self.image_list = ant_other.load_ant_image_list()  # Get ant sprites
         self.image = self.image_list[0]  # Assign ant the initial image
         self.image_iteration = 0  # Initialise image swapping variables
         self.image_index = 0
@@ -143,29 +143,29 @@ class Ant(pygame.sprite.Sprite):
         :param iterations:
         """
         self.stop_count += iterations
-        self.image_iteration = 0
-        self.rotate(0)
+        self.image_iteration = 0  # Set initial ant image
+        self.rotate(0)  # Call rotate function to update to image
 
     def set_return_hole(self, hole_list):
         """
         Its sets it up so that it can choose a random hole from hole_list
         """
-        hole = choice(hole_list)
+        hole = choice(hole_list)  # Choose random hole
         self.return_loc = [hole.rect.x + 30, hole.rect.y + 30]
 
     def movement_variant(self):
         """
         Update ant image for walking sprites
         """
-        self.image_iteration += 1
-        self.image_iteration %= 16
+        self.image_iteration += 1  # Next image
+        self.image_iteration %= 16  # Loop to a lower indexes
         self.image_index = self.image_iteration // 4
 
     def check_escape(self, collision=True):
         """
         Escape from a rock collision when returning to holes
         """
-        if not self.return_loc:
+        if not self.return_loc:  # Stop function if no target
             return None
         if collision and self.return_loc:  # If returning ant collides
             self.found_food = False  # Make the ant forget about food
@@ -181,6 +181,9 @@ class Ant(pygame.sprite.Sprite):
                 self.found_food = True  # Start navigating to hole again
 
     def random_sugar_targeting(self):
+        """
+        Start targetting sugar randomly
+        """
         if randint(0, 1) == 0 and sugar_class.sugar_locations:
             random_sugar = choice(sugar_class.sugar_locations)
             self.return_loc = [random_sugar[0] + 57, random_sugar[1] + 57]

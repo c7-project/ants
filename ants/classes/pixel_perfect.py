@@ -2,7 +2,9 @@
 
 
 def check_collision(obj1, obj2):
-    """checks if two objects have collided, using hitmasks"""
+    """
+    Checks if two objects have collided, using hitmasks
+    """
     try:
         rect1, rect2, hm1, hm2 =\
             obj1.rect, obj2.rect, obj1.hitmask, obj2.hitmask
@@ -25,7 +27,7 @@ def check_collision(obj1, obj2):
 
 def get_colour_key_hitmask(image, rect, key=None):
     """
-    returns a hit-mask using an image's colour_key.
+    Returns a hit-mask using an image's colour_key.
     image -> pygame Surface,
     rect -> pygame Rect that fits image,
     key -> an over-ride colour, if not None will
@@ -44,10 +46,12 @@ def get_colour_key_hitmask(image, rect, key=None):
 
 
 def get_alpha_hitmask(image, rect, alpha=0):
-    """returns a hitmask using an image's alpha.
-       image->pygame Surface,
-       rect->pygame Rect that fits image,
-       alpha->the alpha amount that is invisible in collisions"""
+    """
+    Returns a hitmask using an image's alpha.
+    image->pygame Surface,
+    rect->pygame Rect that fits image,
+    alpha->the alpha amount that is invisible in collisions
+    """
     mask = []
     for x in range(rect.width):
         mask.append([])
@@ -57,7 +61,9 @@ def get_alpha_hitmask(image, rect, alpha=0):
 
 
 def get_colour_key_and_alpha_hitmask(image, rect, key=None, alpha=0):
-    """returns a hitmask using an image's colour_key and alpha."""
+    """
+    Returns a hitmask using an image's colour_key and alpha.
+    """
     mask = []
     for x in range(rect.width):
         mask.append([])
@@ -69,8 +75,10 @@ def get_colour_key_and_alpha_hitmask(image, rect, key=None, alpha=0):
 
 
 def get_full_hitmask(rect):
-    """returns a completely full hitmask that fits the image,
-       without referencing the images colour_key or alpha."""
+    """
+    Returns a completely full hitmask that fits the image,
+    without referencing the images colour_key or alpha.
+    """
     mask = []
     for x in range(rect.width):
         mask.append([])

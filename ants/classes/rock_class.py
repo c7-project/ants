@@ -4,7 +4,7 @@ import misc
 import logger
 import pixel_perfect
 
-number_of_rocks = 0
+number_of_rocks = 0  # Number is incremented when new rocks are added
 
 
 class Rock(pygame.sprite.Sprite):

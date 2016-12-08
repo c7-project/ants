@@ -3,7 +3,7 @@ import pygame
 
 def rotate_center(image, angle):
     """
-    Rotate a square image while maintaining its center and size
+    Rotate a square image while maintaining its centre and size
     """
     # From http://pygame.org/wiki/RotateCenter
     orig_rect = image.get_rect()
@@ -15,5 +15,8 @@ def rotate_center(image, angle):
 
 
 def get_mouse_loc():
+    """
+    Get the x,y location of the mouse
+    """
     pos = pygame.mouse.get_pos()
     return pos[0], pos[1]

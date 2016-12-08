@@ -14,8 +14,9 @@ class Hole(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("images/hole01a.png")
         self.rect = self.image.get_rect()
-        if at_mouse:
+        if at_mouse:  # Add hole at mouse location
             pos = misc.get_mouse_loc()
+            # Set new top left coordinates
             self.rect.x, self.rect.y = pos[0] - 30, pos[1] - 30
         else:
             self.rect.x, self.rect.y = get_valid_hole_location()
